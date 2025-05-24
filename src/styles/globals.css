@@ -10,4 +10,12 @@ html {
 
 body {
   @apply font-ubuntu text-[14px] bg-soft text-white;
+  margin: 0;
+  background: linear-gradient(45deg, #1e3c72, #2a5298);
+  color: white;
+  min-height: 100vh;
+
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto 1fr auto;
 }
