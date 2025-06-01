@@ -124,7 +124,6 @@ nav {
 
 .btn-header {
   background-image: linear-gradient(to right, var(--color-header-button-bg), var(--color-select));
-  border: none;
   border-radius: 0.375rem;
   line-height: 1.5;
   display: inline-block;
@@ -133,7 +132,6 @@ nav {
   vertical-align: middle;
   user-select: none;
   transition: all 0.15s ease-in-out;
-  border: none;
   margin: 0;
 }
 
@@ -141,14 +139,23 @@ nav {
   background-image: linear-gradient(to left, var(--color-header-button-bg), var(--color-select));
 }
 
-.btn-header:hover .navItem,
-.btn-header.active .navItem,
-.btn-header:hover .navItem:hover,
-.btn-header.active .navItem.active {
+.btn-header .navItem.active,
+.btn-header:hover .navItem:hover {
+  color: var(--color-text-default);
+  border-bottom: 2px solid transparent;
+}
+
+
+/* .btn-header:hover.navItem,
+.btn-header.active.navItem,
+.btn-header:hover.navItem:hover,
+.btn-header.active.navItem.active,
+.btn-header.navItem.active {
   color: var(--color-text-default);
   border: none;
   margin: 0;
-}
+  text-decoration: none;
+} */
 
 .margin-x {
   margin-left: 10px;
