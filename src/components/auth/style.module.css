@@ -2,19 +2,25 @@
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 100vh;
-    background: var(--color-bg-body);
+    min-height: auto;
+}
+
+.container * {
+    color: var(--color-text-main);
 }
 
 .side {
-    background: var(--color-bg-main);
     color: var(--color-text-default);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     padding: 2rem;
+}
+
+.side * {
+    color: var(--color-text-default);
 }
 
 .logo {
@@ -25,6 +31,7 @@
 
 .image {
     margin-top: 2rem;
+    filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.5));
 }
 
 .formWrapper {
@@ -34,6 +41,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 3rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .tabs {
@@ -65,6 +73,11 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+.group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .group label {

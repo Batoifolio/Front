@@ -2,62 +2,158 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
 import styles from './style.module.css';
+import { useState } from 'react';
 
 export default function AuthPage({ mode = 'login' }) {
     const router = useRouter();
     const isLogin = mode === 'login';
 
+    // Estado del formulario
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [apellidos, setApellidos] = useState('');
+    const [username, setUsername] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+
+        try {
+            const response = await fetch(`https://api.midominio.com/${isLogin ? 'login' : 'signup'}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    ...(isLogin ? {} : { name }), // Solo envía nombre en signup
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.message || 'Error en la autenticación');
+
+            // Guardar token/localStorage/cookies si quieres aquí
+            console.log('Autenticado:', data);
+
+            // Redirigir al dashboard o home
+            router.push('/dashboard'); // o donde quieras
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const signupTab = () => {
+        return (
+            <>
+                <div className={styles.group}>
+                    <label>Nombre:</label>
+                    <input
+                        type="text"
+                        placeholder="Tu nombre"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={styles.group}>
+                    <label>Apellidos:</label>
+                    <input
+                        type="text"
+                        placeholder="Tus apellidos"
+                        value={apellidos}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={styles.group}>
+                    <label>Tu Nombre de Usuario:</label>
+                    <input
+                        type="text"
+                        placeholder="userName"
+                        value={username}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={styles.group}>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        placeholder="email"
+                        value={email}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+            </>
+        );
+    }
+    const logInTab = () => {
+        return (
+            <>
+                <div className={styles.group}>
+                    <label>UserName / Email: </label>
+                    <input
+                        type="text"
+                        placeholder="username / email@empresa.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+
+                <div className={styles.group}>
+                    <label>Contraseña: </label>
+                    <input
+                        type="password"
+                        placeholder="********"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+            </>
+        );
+    }
+
     return (
         <>
             <Head>
-                <title>Batoifolio - {isLogin ? 'Log In' : 'Sign Up'}</title>
+                <title>Batoifolio - {isLogin ? 'Login' : 'Registro'}</title>
             </Head>
 
             <div className={styles.container}>
-                {/* Lado izquierdo con el logo */}
                 <div className={styles.side}>
-                    <Image src="/batoifolio.png" alt="Logo Empresa" width={180} height={180} className={styles.image} />
-                    <Image src="/batoifolio-icon.png" alt="Logo Empresa Icon" width={100} height={100} className={styles.image} />
+                    <Image src="/batoifolio-icon.png" alt="Logo Empresa" width={180} height={180} className={styles.image} />
+                    <Image src="/batoifolio.png" alt="Texto Empresa" width={180} height={180} className={styles.image} />
                     <p>Bienvenido a la plataforma profesional de Batoifolio.</p>
                 </div>
 
-                {/* Formulario */}
                 <div className={styles.formWrapper}>
                     <div className={styles.tabs}>
-                        <button
-                            onClick={() => router.push('/login')}
-                            className={`${styles.tab} ${isLogin ? styles.tabActive : ''}`}
-                        >
+                        <button onClick={() => router.push('/login')} className={`${styles.tab} ${isLogin ? styles.tabActive : ''}`}>
                             Iniciar Sesión
                         </button>
-                        <button
-                            onClick={() => router.push('/signup')}
-                            className={`${styles.tab} ${!isLogin ? styles.tabActive : ''}`}
-                        >
+                        <button onClick={() => router.push('/signup')} className={`${styles.tab} ${!isLogin ? styles.tabActive : ''}`}>
                             Registrarse
                         </button>
                     </div>
 
-                    <form className={styles.form}>
-                        {!isLogin && (
-                            <div className={styles.group}>
-                                <label>Nombre completo</label>
-                                <input type="text" placeholder="Tu nombre" required />
-                            </div>
-                        )}
+                    <form className={styles.form} onSubmit={handleSubmit}>
+                        {isLogin ? logInTab() : signupTab()}
 
-                        <div className={styles.group}>
-                            <label>Email</label>
-                            <input type="email" placeholder="email@empresa.com" required />
-                        </div>
+                        {error && <p className={styles.error}>{error}</p>}
 
-                        <div className={styles.group}>
-                            <label>Contraseña</label>
-                            <input type="password" placeholder="********" required />
-                        </div>
-
-                        <button type="submit" className={styles.submit}>
-                            {isLogin ? 'Entrar' : 'Crear cuenta'}
+                        <button type="submit" className={styles.submit} disabled={loading}>
+                            {loading ? 'Enviando...' : isLogin ? 'Entrar' : 'Crear cuenta'}
                         </button>
 
                         {isLogin && (

@@ -2,6 +2,7 @@ import NavItem from './NavItem';
 import useMediaQuery from '../hooks/useMediaQuery'; // asegúrate de la ruta
 import { Menu, X } from 'lucide-react';
 import React, { useState } from 'react';
+import Link from 'next/link';
 const renderDesktop = () => {
     return (
         <div className="navList flex gap-4">
@@ -51,7 +52,9 @@ const Navbar = () => {
     return (
         <div className="w-full h-20 bg-emerald-800 sticky top-0">
             <div className="container mx-auto px-4 h-full header-container flex items-center justify-between">
-                <h1 className="logo text-white text-xl font-bold">Batoifolio</h1>
+                <Link href="/">
+                    <h1 className="logo text-white text-xl font-bold">Batoi<span className='accent'>Folio</span></h1>
+                </Link>
 
                 {!isMobile && (
                     renderDesktop()
