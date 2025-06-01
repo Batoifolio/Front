@@ -111,6 +111,10 @@ nav {
 .navItem.active {
   color: var(--color-accent);
   border-bottom: 2px solid var(--color-accent);
+
+  * {
+    color: var(--color-accent);
+  }
 }
 
 .btn {
@@ -143,19 +147,11 @@ nav {
 .btn-header:hover .navItem:hover {
   color: var(--color-text-default);
   border-bottom: 2px solid transparent;
+
+  * {
+    color: var(--color-text-default);
+  }
 }
-
-
-/* .btn-header:hover.navItem,
-.btn-header.active.navItem,
-.btn-header:hover.navItem:hover,
-.btn-header.active.navItem.active,
-.btn-header.navItem.active {
-  color: var(--color-text-default);
-  border: none;
-  margin: 0;
-  text-decoration: none;
-} */
 
 .margin-x {
   margin-left: 10px;

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 const renderDesktop = () => {
     return (
         <div className="navList flex gap-4">
+            <NavItem path="/" label='<i class="bi bi-house-fill"></i>' />
             <NavItem path="/about" label="Sobre Nosotros" />
             <NavItem path="/search" label="Buscar" />
             <NavItem path="/companies" label="Empresas" />
@@ -27,6 +28,7 @@ const renderMobile = (menuOpen, setMenuOpen) => (
 
         {menuOpen && (
             <div className="navList drop-menu">
+                <NavItem path="/" label='<i class="bi bi-house-fill"></i>' />
                 <NavItem path="/about" label="Sobre Nosotros" />
                 <NavItem path="/search" label="Buscar" />
                 <NavItem path="/companies" label="Empresas" />

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const AboutPage = () => {
+    document.title = 'Batoifolio - Empresas';
     return (
         <div>
             <h1>About Page</h1>

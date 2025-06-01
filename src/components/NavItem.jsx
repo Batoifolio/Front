@@ -11,9 +11,7 @@ const NavItem = ({ path, label }) => {
             className={`navItem ${isActive ? 'active' : ''}`}
             href={isActive ? '#' : path}
         >
-            <span>
-                {label}
-            </span>
+            <span dangerouslySetInnerHTML={{ __html: label }} />
         </Link>
     );
 };
