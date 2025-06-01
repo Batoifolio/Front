@@ -14,12 +14,15 @@ const renderDesktop = () => {
 }
 const renderMobile = (menuOpen, setMenuOpen) => (
     <>
-        <button onClick={() => setMenuOpen(!menuOpen)} className="text-white z-50">
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        <div className="navList flex gap-4">
+
+            <button onClick={() => setMenuOpen(!menuOpen)} className="text-white z-50 navItem btn">
+                {menuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+        </div>
 
         {menuOpen && (
-            <div className="absolute top-20 left-0 w-full bg-emerald-700 px-4 py-4 navList flex flex-col gap-4">
+            <div className="absolute top-20 left-0 w-full bg-emerald-700 px-4 py-4 navList flex flex-col gap-4 margin-x">
                 <NavItem path="/about" label="Sobre Nosotros" />
                 <NavItem path="/search" label="Buscar" />
                 <NavItem path="/companies" label="Empresas" />

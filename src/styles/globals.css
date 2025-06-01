@@ -87,6 +87,21 @@ nav {
   border-bottom: 2px solid #ff4081;
 }
 
+.btn {
+  border: none;
+}
+
+.btn:hover {
+  color: #ff4081;
+  border: none;
+
+}
+
+.margin-x {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 main {
   margin-top: 80px;
   max-width: 1200px;
