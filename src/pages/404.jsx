@@ -1,14 +1,11 @@
-// pages/404.js
-import Link from 'next/link';
+// pages/404.jsx
 
 export default function Custom404() {
     return (
         <div style={styles.container}>
             <h1 style={styles.title}>404</h1>
             <p style={styles.subtitle}>Ups... esta página no existe.</p>
-            <Link href="/" style={styles.link}>
-                Volver al inicio
-            </Link>
+            <a href="/" style={styles.link}>Volver al inicio</a>
         </div>
     );
 }
