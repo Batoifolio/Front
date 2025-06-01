@@ -12,6 +12,7 @@ export default function AuthPage({ mode = 'login' }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [apellidos, setApellidos] = useState('');
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
@@ -69,7 +70,7 @@ export default function AuthPage({ mode = 'login' }) {
                         type="text"
                         placeholder="Tus apellidos"
                         value={apellidos}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setApellidos(e.target.value)}
                         required
                     />
                 </div>
@@ -79,7 +80,7 @@ export default function AuthPage({ mode = 'login' }) {
                         type="text"
                         placeholder="userName"
                         value={username}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
@@ -89,7 +90,27 @@ export default function AuthPage({ mode = 'login' }) {
                         type="email"
                         placeholder="email"
                         value={email}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={styles.group}>
+                    <label>Contraseña: </label>
+                    <input
+                        type="password"
+                        placeholder="********"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className={styles.group}>
+                    <label>Confirmar Contraseña: </label>
+                    <input
+                        type="password"
+                        placeholder="********"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
                 </div>
