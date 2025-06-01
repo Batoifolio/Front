@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const AboutPage = () => {
-    document.title = 'Batoifolio - Empresas';
+    useEffect(() => {
+        document.title = 'Batoifolio - Empresas';
+    }, []);
     return (
         <div>
             <h1>About Page</h1>

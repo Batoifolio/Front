@@ -1,5 +1,9 @@
 // components/UnauthorizedRequiredLogin.jsx
+import React, { useEffect } from 'react';
 export default function UnauthorizedRequiredLogin() {
+    useEffect(() => {
+        document.title = 'Batoifolio - Acceso no autorizado';
+    }, []);
     return (
         <div style={styles.container}>
             <h1 style={styles.title}>Acceso no autorizado</h1>
