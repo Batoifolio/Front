@@ -1,0 +1,54 @@
+/* WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    /* completamente transparente */
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg,
+            rgba(142, 45, 226, 0.4),
+            rgba(74, 0, 224, 0.4));
+    border-radius: 10px;
+    border: 2px solid transparent;
+    /* espacio interno */
+    background-clip: content-box;
+    box-shadow: 0 0 6px var(--color-box-shadow-main);
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg,
+            var(--color-accent),
+            var(--color-header-button-bg-hover));
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(142, 45, 226, 0.4) transparent;
+}
+
+/* Para elementos específicos */
+.scrollable {
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(142, 45, 226, 0.4) transparent;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg,
+            rgba(142, 45, 226, 0.4),
+            rgba(74, 0, 224, 0.4));
+    border-radius: 10px;
+    background-clip: content-box;
+    box-shadow: 0 0 6px var(--color-box-shadow-main);
+}
