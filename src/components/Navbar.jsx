@@ -10,7 +10,7 @@ const renderDesktop = () => {
             <NavItem path="/search" label="Buscar" />
             <NavItem path="/companies" label="Empresas" />
             <span className="btn-header">
-                <NavItem path="/signin" label="Sign In" />
+                <NavItem path="/login" label="Log In" />
             </span>
         </div>
     );
@@ -33,7 +33,7 @@ const renderMobile = (menuOpen, setMenuOpen) => (
                 <NavItem path="/search" label="Buscar" />
                 <NavItem path="/companies" label="Empresas" />
                 <span className="btn-header">
-                    <NavItem path="/signin" label="Sign In" />
+                    <NavItem path="/login" label="Log In" />
                 </span>
             </div>
         )}

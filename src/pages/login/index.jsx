@@ -1,14 +1,5 @@
-import React, { useEffect } from 'react';
-const AboutPage = () => {
-    useEffect(() => {
-        document.title = 'Batoifolio - Log In';
-    }, []);
-    return (
-        <div>
-            <h1>About Page</h1>
-            <p>This is the about page content.</p>
-        </div>
-    );
-};
-
-export default AboutPage;
+// pages/login.jsx
+import AuthPage from '@/components/auth/AuthPage';
+export default function Login() {
+    return <AuthPage mode="login" />;
+}

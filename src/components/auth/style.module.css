@@ -1,0 +1,112 @@
+/* login.module.css */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    background: var(--color-bg-body);
+}
+
+.side {
+    background: var(--color-bg-main);
+    color: var(--color-text-default);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.image {
+    margin-top: 2rem;
+}
+
+.formWrapper {
+    background: white;
+    color: var(--color-text-main);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #ccc;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    border-bottom: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tabActive {
+    color: var(--color-accent);
+    border-bottom: 4px solid var(--color-accent);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.group label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.group input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.group input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.submit {
+    padding: 0.75rem;
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background: #e03570;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.switch {
+    color: var(--color-accent);
+    cursor: pointer;
+    font-weight: 500;
+}
