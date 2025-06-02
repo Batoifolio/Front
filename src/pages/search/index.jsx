@@ -1,20 +1,15 @@
-import React, { useEffect } from 'react';
-import { withAuth } from '@/utils/auth/withAuth';
-import { withAuthPage } from '@/utils/auth/withAuthPage';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 
-export const getServerSideProps = withAuth();
+export default function AboutPage() {
+    const { user } = useContext(AuthContext);
 
-const AboutPage = ({ user }) => {
-    useEffect(() => {
-        document.title = 'Batoifolio - Sobre Nosotros';
-    }, []);
+    if (!user) return <p>No estás autenticado</p>;
+
     return (
         <div>
-            <h1>About Page</h1>
-            <p>Hola, {user?.name} 👋</p>
+            <h1>About</h1>
+            <p>Hola, {user.name}</p>
         </div>
     );
-};
-
-export default withAuthPage(AboutPage);
-
+}

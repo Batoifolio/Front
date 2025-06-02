@@ -3,6 +3,9 @@ import Image from 'next/image';
 import Head from 'next/head';
 import styles from './style.module.css';
 import { useState } from 'react';
+import { saveToken, getToken, isRegistered, clearToken } from '@/utils/auth/token';
+import { saveUser, getUser } from '@/utils/auth/user';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AuthPage({ mode = 'login' }) {
     const router = useRouter();
@@ -24,13 +27,15 @@ export default function AuthPage({ mode = 'login' }) {
         setLoading(true);
 
         try {
-            const response = await fetch(`https://api.midominio.com/${isLogin ? 'login' : 'signup'}`, {
+            const response = await fetch(`${apiUrl}${isLogin ? 'login' : 'register'}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    nombre: name,
+                    apellidos: apellidos,
+                    username,
                     email,
                     password,
-                    ...(isLogin ? {} : { name }), // Solo envía nombre en signup
                 }),
             });
 
@@ -38,17 +43,20 @@ export default function AuthPage({ mode = 'login' }) {
 
             if (!response.ok) throw new Error(data.message || 'Error en la autenticación');
 
-            // Guardar token/localStorage/cookies si quieres aquí
-            console.log('Autenticado:', data);
+            // Obtener token de headers o data
+            const token = response.headers.get('Authorization') || data.token; // depende de la API
 
-            // Redirigir al dashboard o home
-            router.push('/dashboard'); // o donde quieras
+            saveToken(token);
+            saveUser(data);
+
+            // Redirigir o hacer algo más
         } catch (err) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
     };
+
 
 
     const signupTab = () => {
@@ -118,6 +126,11 @@ export default function AuthPage({ mode = 'login' }) {
         );
     }
     const logInTab = () => {
+        // if (isRegistered()) {
+        //     const user = getUser();
+        //     setEmail(user?.email || '');
+        //     setUsername(user?.username || '');
+        // }
         return (
             <>
                 <div className={styles.group}>
@@ -125,8 +138,11 @@ export default function AuthPage({ mode = 'login' }) {
                     <input
                         type="text"
                         placeholder="username / email@empresa.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={username || email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            setUsername(e.target.value)
+                        }}
                         required
                     />
                 </div>

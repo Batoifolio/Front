@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev2": "next dev --turbopack",
-    "dev": "next dev",
+    "dev": "PORT=3001 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,6 +16,7 @@
     "bootstrap-icons": "1.13.1",
     "clsx": "2.1.1",
     "framer-motion": "12.12.2",
+    "js-cookie": "3.0.5",
     "jsonwebtoken": "9.0.2",
     "lucide-react": "0.511.0",
     "next": "15.1.8",
