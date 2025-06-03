@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
+import { getToken } from './utils/auth/token';
 import jwt from 'jsonwebtoken';
 
 export function middleware(req) {
-    const token = req.cookies.get('token');
+    const token = getToken();
 
     if (!token) {
         return NextResponse.redirect(new URL('/login', req.url));

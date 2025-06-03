@@ -126,11 +126,6 @@ export default function AuthPage({ mode = 'login' }) {
         );
     }
     const logInTab = () => {
-        // if (isRegistered()) {
-        //     const user = getUser();
-        //     setEmail(user?.email || '');
-        //     setUsername(user?.username || '');
-        // }
         return (
             <>
                 <div className={styles.group}>

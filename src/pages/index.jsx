@@ -13,6 +13,7 @@ export default function Home() {
         Una plataforma para <strong className="font-semibold">destacar los talentos</strong> de los alumnos del <strong>IES Batoi</strong>.
         Explora perfiles, proyectos y encuentra oportunidades de <span className="text-corporate font-bold">FCT o DUAL</span>.
       </p>
+
     </section>
   );
 }
