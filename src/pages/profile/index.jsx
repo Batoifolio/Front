@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
-import { AlertNoAutenticado } from '@/components/auth/AlertNoAutenticado';
+import AlertNoAutenticado from '@/components/auth/AlertNoAutenticado.jsx';
 
 export default function AboutPage() {
   const { user } = useContext(AuthContext);
 
-  if (!user) return AlertNoAutenticado();
+  if (!user) return <AlertNoAutenticado />;
 
   return (
     <div>

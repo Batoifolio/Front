@@ -19,5 +19,5 @@ export function middleware(req) {
 
 // Opcional: configurar rutas protegidas en middleware.config.js
 export const config = {
-    matcher: ['/profile', '/dashboard'], // rutas protegidas
+    matcher: ['/dashboard'], // rutas protegidas
 };

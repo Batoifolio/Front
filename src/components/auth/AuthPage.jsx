@@ -1,15 +1,19 @@
+import Swal from 'sweetalert2';
+import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 import Head from 'next/head';
 import styles from './style.module.css';
-import { useState } from 'react';
 import { saveToken, getToken, isRegistered, clearToken } from '@/utils/auth/token';
 import { saveUser, getUser } from '@/utils/auth/user';
+import { AuthContext } from '@/context/AuthContext';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AuthPage({ mode = 'login' }) {
     const router = useRouter();
-    const isLogin = mode === 'login';
+    const { login: setAuthUser } = useContext(AuthContext);
+    const isLogin = mode === 'login' || mode === 'logout';
 
     // Estado del formulario
     const [name, setName] = useState('');
@@ -39,25 +43,33 @@ export default function AuthPage({ mode = 'login' }) {
                 }),
             });
 
-            const data = await response.json();
+            const res = await response.json();
+            if (!response.ok) throw new Error(res.message || 'Error en la autenticación');
 
-            if (!response.ok) throw new Error(data.message || 'Error en la autenticación');
+            // Obtener token de headers o del body
+            const token = response.headers.get('Authorization') || res.token;
+            if (!token) throw new Error('Token no recibido');
 
-            // Obtener token de headers o data
-            const token = response.headers.get('Authorization') || data.token; // depende de la API
-
+            // Guardar token en localStorage
             saveToken(token);
-            saveUser(data);
 
-            // Redirigir o hacer algo más
+            // Si el backend te devuelve los datos del usuario directamente
+            if (res) {
+                saveUser(res.data); // opcional si también quieres guardar localmente
+                setAuthUser(token, res.data); // actualiza el contexto global
+            } else {
+                // Si solo recibes el token, el contexto login() debe hacer fetchUser() internamente
+                setAuthUser(token); // el contexto se encarga de traer los datos
+            }
+            window.location.reload(); // Recargar para actualizar el estado global
+            setTimeout(() => {
+            }, 2000); // 2000 milliseconds = 2 seconds
         } catch (err) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
     };
-
-
 
     const signupTab = () => {
         return (
@@ -156,6 +168,40 @@ export default function AuthPage({ mode = 'login' }) {
         );
     }
 
+
+    const { user } = useContext(AuthContext);
+
+    if (mode === 'logout') {
+        useEffect(() => {
+            if (user && user !== null) {
+                Swal.fire({
+                    title: 'Cerrar sesión',
+                    text: '¿Estás seguro de que deseas cerrar sesión?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, cerrar sesión',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        clearToken(); // Clear the token
+                        setAuthUser(null, null); // Clear the context
+                        Swal.close(); // Close the Swal instance
+                        router.push('/login'); // Redirect to login page
+                    }
+                });
+
+            } else {
+                Swal.fire({
+                    title: 'No hay sesión activa',
+                    text: 'Tienes que tener una sestión par aqu es pueda cerrar.',
+                    icon: 'info',
+                    confirmButtonText: 'Aceptar',
+                }).then(() => {
+                    router.push('/login'); // Redirect to login page
+                });
+            }
+        }, [user]);
+    }
     return (
         <>
             <Head>
@@ -167,6 +213,8 @@ export default function AuthPage({ mode = 'login' }) {
                     <Image src="/batoifolio-icon.png" alt="Logo Empresa" width={180} height={180} className={styles.image} />
                     <Image src="/batoifolio.png" alt="Texto Empresa" width={180} height={180} className={styles.image} />
                     <p>Bienvenido a la plataforma profesional de Batoifolio.</p>
+
+                    {user && <h1>Hola, {user.nombre}!</h1>}
                 </div>
 
                 <div className={styles.formWrapper}>
@@ -191,9 +239,9 @@ export default function AuthPage({ mode = 'login' }) {
                         {isLogin && (
                             <p className={styles.footer}>
                                 ¿No tienes cuenta?{' '}
-                                <span className={styles.switch} onClick={() => router.push('/signup')}>
+                                <Link href="/signup">
                                     Regístrate
-                                </span>
+                                </Link>
                             </p>
                         )}
                     </form>
