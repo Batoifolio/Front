@@ -32,8 +32,17 @@ html {
   background-color: var(--color-select);
 }
 
-*:not(a):not(button):not(.swal2-container *) {
+* {
   color: var(--color-text-default);
+}
+
+.swal2-container * {
+  color: var(--color-text-main);
+}
+
+a,
+button {
+  color: var(--color-rosa);
 }
 
 body {
