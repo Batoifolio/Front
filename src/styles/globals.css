@@ -204,8 +204,7 @@ main {
   background: var(--color-bg-main);
   border-radius: 12px;
   box-shadow: 0 10px 30px var(--color-box-shadow-main);
-  min-height: 80vh;
-
+  min-height: 78.3vh;
 }
 
 a {
@@ -233,6 +232,41 @@ button.swal2-confirm.swal2-styled {
 .submit:hover,
 button.swal2-confirm.swal2-styled:hover {
   background: var(--color-rosa-fuerte);
+}
+
+input {
+  padding: 0.3rem;
+  border-bottom: 1px solid var(--color-gris);
+  /* border-radius: 8px; */
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-gris);
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: var(--color-blanco);
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--color-gris);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background-color: var(--color-blanco);
+  min-height: 50px;
 }
 
 footer {

@@ -6,8 +6,8 @@ import Image from 'next/image';
 import Head from 'next/head';
 import styles from './style.module.css';
 import { AuthContext } from '@/context/AuthContext';
-
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { gatTokenByHeaderRequest } from '@/utils/auth/token';
 
 export default function AuthPage({ mode = 'login' }) {
     const router = useRouter();
@@ -44,10 +44,10 @@ export default function AuthPage({ mode = 'login' }) {
             const res = await response.json();
             if (!response.ok) throw new Error(res.message || 'Error en la autenticación');
 
-            const token = response.headers.get('Authorization') || res.token;
+            const token = gatTokenByHeaderRequest(response)
             if (!token) throw new Error('Token no recibido');
 
-            setAuthUser(token, res.data); // el contexto guarda token y usuario
+            setAuthUser(token, res.data);
 
             router.push('/'); // Redirigir tras login
         } catch (err) {

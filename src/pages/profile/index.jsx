@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import styles from './style.module.css';
+import Link from 'next/link';
 
 function ProfilePage() {
   const { user } = useContext(AuthContext);
@@ -12,34 +13,38 @@ function ProfilePage() {
           <img src={user.fotoPerfil || '/default-avatar.png'} alt="Avatar" />
         </div>
         <div className={styles.userInfo}>
-          <h1>@{user.username}</h1>
-          <h2>{user.nombre} {user.apellidos}</h2>
-          <p>{user.email}</p>
+          <h1><strong>Usuario:</strong> @{user.username}</h1>
+          <h2><strong>Nombre:</strong> {user.nombre} {user.apellidos}</h2>
+          <p><strong>Email:</strong> {user.email}</p>
         </div>
       </div>
 
       <div className={styles.mainInfo}>
         <div className={styles.cardSection}>
-          <h3>Datos Personales</h3>
+          <h3><strong>Datos Personales</strong></h3>
           <p><strong>Teléfono:</strong> {user.telefono || 'No hay teléfono de contacto.'}</p>
           <p><strong>Ciudad:</strong> {user.pueblo || 'No se ha especificado.'}</p>
           <p><strong>Miembro desde:</strong> {new Date(user.creadoEn).toLocaleDateString()}</p>
         </div>
         <div className={styles.cardSection}>
-          <h3>Información Académica</h3>
+          <h3><strong>Información Académica</strong></h3>
           <p><strong>Familia:</strong> {user.ramaId || 'No se ha especificado.'}</p>
           <p><strong>PF Cursando:</strong> {user.gradoId || 'No se ha especificado.'}</p>
         </div>
       </div>
 
       <div className={styles.description}>
-        <h3>Descripción</h3>
+        <h3><strong>Descripción</strong></h3>
         <p>{user.descripcion || 'No hay biografía disponible.'}</p>
       </div>
 
       <div className={styles.buttons}>
-        <button className={styles.editButton}>Editar Perfil</button>
-        <button className={styles.logoutButton}>Cerrar Sesión</button>
+        <Link href="/profile/edit" className={styles.editButton}>
+          Editar Perfil
+        </Link>
+        <Link href="/logout" className={styles.logoutButton}>
+          Cerrar Sesión
+        </Link>
       </div>
     </div>
   );

@@ -23,14 +23,10 @@ function clearToken() {
     }
 }
 
-function createHeaderToken() {
-    const token = getToken();
-    if (!token) return null;
-    return {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        }
-    };
+function gatTokenByHeaderRequest(request) {
+    if (!request || !request.headers) return null;
+    const token = request.headers.get('Authorization')
+    return token ? token : null;
 }
 
-export { saveToken, getToken, isRegistered, clearToken, createHeaderToken };
+export { saveToken, getToken, isRegistered, clearToken, gatTokenByHeaderRequest };
