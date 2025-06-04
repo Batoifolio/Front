@@ -1,56 +1,62 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getToken, saveToken, clearToken } from '@/utils/auth/token';
-import { fetchUser } from '@/utils/auth/user';
+import { fetchUser, saveUser, getUser, clearUser } from '@/utils/auth/user';
 
-// 1. Crear el contexto
 export const AuthContext = createContext();
 
-// 2. Crear el proveedor del contexto
+export function isRegistered() {
+    return getUser() !== null;
+}
+
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);  // Estado donde guardaremos al usuario
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-
-    // 3. Cuando el componente se monta, buscamos el token y validamos
     useEffect(() => {
-        async function loadUser() {
-            const token = getToken(); // Leer token guardado en localStorage o cookie
-            if (!token) {
-                setUser(null);  // No hay token → no hay usuario
-                return;
-            }
+        const token = getToken();
+        const storedUser = getUser();
 
-
-            // Aquí llamamos a nuestra API para validar el token y obtener datos del usuario
-            try {
-                const res = await fetchUser();
-
-                if (!res.success) throw new Error('Token inválido');
-
-                setUser(res.data);  // Guardar usuario en estado global
-            } catch (error) {
-                clearToken();  // Si token inválido, borrarlo
-                setUser(null);
-            }
+        if (!token) {
+            setUser(null);
+            setLoading(false);
+            return;
         }
 
-        loadUser();
+        if (storedUser) {
+            setUser(storedUser);
+            setLoading(false);
+        } else {
+            fetchUser()
+                .then(res => {
+                    if (!res.success) throw new Error('Token inválido');
+                    setUser(res.data);
+                    saveUser(res.data);
+                })
+                .catch(() => {
+                    clearToken();
+                    clearUser();
+                    setUser(null);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
     }, []);
 
-    // Función para hacer login (guardar token y usuario)
     function login(token, userData) {
         saveToken(token);
+        saveUser(userData);
         setUser(userData);
     }
 
-    // Función para logout (borrar token y usuario)
     function logout() {
         clearToken();
+        clearUser();
         setUser(null);
     }
 
-    // 4. Proveemos el contexto con los datos y funciones para usar en la app
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

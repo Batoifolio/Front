@@ -31,4 +31,8 @@ async function fetchUser() {
     // Aquí podrías hacer una llamada a la API para obtener datos adicionales del usuario si es necesario
 }
 
-export { saveUser, getUser, fetchUser };
+function clearUser() {
+    localStorage.removeItem('user');
+}
+
+export { saveUser, getUser, fetchUser, clearUser };
