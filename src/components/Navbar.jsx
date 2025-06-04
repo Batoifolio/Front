@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 import React, { useState, useContext } from 'react';
 import Link from 'next/link';
 
-import ProfileMenu from './ProfileMenu';
+import ProfileMenu from './ProfileMenu/ProfileMenu';
 
 // esta registrado, si esta registrao, tiene que aparecer el boton para ir al perfil
 // returnButonHeader retorna el boton correspondinte, en caso de no estar logeado, ternoa el boton de login

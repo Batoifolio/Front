@@ -1,0 +1,72 @@
+.profileContainer {
+    position: relative;
+}
+
+.profileButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.profilePic {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.profileDropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: var(--color-blanco);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    width: 150px;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+}
+
+
+.profileBtn,
+.logoutBtn {
+    width: 100%;
+    padding: 8px;
+    background: none;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    color: var(--color-text-default);
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.profileBtn {
+    background-color: var(--color-rosa);
+}
+
+.profileBtn button {
+    color: var(--color-text-default);
+}
+
+.profileBtn:hover {
+    background-color: var(--color-rosa-fuerte);
+}
+
+.logoutBtn {
+    cursor: pointer;
+    color: var(--color-text-default);
+    font-size: 14px;
+    transition: all 0.2s ease;
+    text-align: center;
+    background-color: var(--color-rojo);
+}
+
+.logoutBtn:hover {
+    background: var(--color-rojo-fuerte);
+}

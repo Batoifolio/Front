@@ -4,15 +4,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&family=Roboto&family=Lato&display=swap');
 @import url('./scrollbar.css');
+/* @import url('../components/ProfileMenu/ProfileMenu.module.css'); */
 
 :root {
+  --color-blanco: #ffffff;
+  --color-gris: #666;
   --color-rosa-fuerte: #e03570;
   --color-rosa: #ff4081;
   --color-rosa-suave: #fc8fb3;
+  --color-rojo-fuerte: #c82333;
+  --color-rojo: #dc3545;
   --color-bg-body: linear-gradient(180deg, #fff 45%, #cecece 85%, #666);
   --color-bg-main: linear-gradient(45deg, var(--color-rosa), var(--color-accent-select));
-  --color-text-default: #ffffff;
-  --color-text-main: #666;
+  --color-text-default: var(--color-blanco);
+  --color-text-main: var(--color-gris);
   --color-accent: var(--color-rosa);
   --color-accent-select: #fc8fb3;
   --color-header-bg: rgba(0, 0, 0, 0.6);
@@ -172,12 +177,6 @@ nav {
   * {
     color: var(--color-text-default);
   }
-}
-
-
-.btn-profile * {
-  border-radius: 50%;
-  width: 50px;
 }
 
 .margin-x {
