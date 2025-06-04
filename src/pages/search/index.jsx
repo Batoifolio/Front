@@ -1,18 +1,13 @@
-import { useContext } from 'react';
-import { AuthContext } from '@/context/AuthContext';
-import AlertNoAutenticado from '@/components/auth/AlertNoAutenticado.jsx';
-
-export default function AboutPage() {
-    const { user, loading } = useContext(AuthContext);
-
-    if (loading) return <div>Cargando...</div>;
-
-    if (!user) return <AlertNoAutenticado />;
-
+// pages/search.jsx
+function SearchPage() {
     return (
         <div>
-            <h1>About</h1>
-            <p>Hola, {user.nombre}</p>
+            <h1>Buscar</h1>
+            <p>Buscar Alumnos</p>
         </div>
     );
 }
+
+SearchPage.auth = true; // ← Protege esta página
+
+export default SearchPage;
