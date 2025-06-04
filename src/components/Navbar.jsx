@@ -3,27 +3,29 @@ import useMediaQuery from '../hooks/useMediaQuery'; // asegúrate de la ruta
 import { Menu, X } from 'lucide-react';
 import React, { useState, useContext } from 'react';
 import Link from 'next/link';
-import { AuthContext } from '@/context/AuthContext';
+
+import ProfileMenu from './ProfileMenu';
 
 // esta registrado, si esta registrao, tiene que aparecer el boton para ir al perfil
 // returnButonHeader retorna el boton correspondinte, en caso de no estar logeado, ternoa el boton de login
-function returnButonHeader() {
-    const { user } = useContext(AuthContext);
-    // const user = null;
-    if (user) {
+// function returnButonHeader() {
+//     // const { user } = useContext(AuthContext);
+//     // const user = null;
+//     // if (user) {
 
-        return (
-            <span className="btn-profile">
-                <NavItem path="/profile" label={<img src={user.fotoPerfil} alt={user.nombre} className="profile-pic" />} />
-            </span>
-        );
-    }
-    return (
-        <span className="btn-header">
-            <NavItem path="/login" label="Log In" />
-        </span>
-    );
-}
+//     // return (
+//     //     <span className="btn-profile">
+//     //         <NavItem path="/profile" label={<img src={user.fotoPerfil} alt={user.nombre} className="profile-pic" />} />
+//     //     </span>
+//     // );
+//     // return
+//     // }
+//     return (
+//         <span className="btn-header">
+//             <NavItem path="/login" label="Log In" />
+//         </span>
+//     );
+// }
 
 
 const renderDesktop = () => {
@@ -33,7 +35,7 @@ const renderDesktop = () => {
             <NavItem path="/about" label="Sobre Nosotros" />
             <NavItem path="/search" label="Buscar" />
             <NavItem path="/companies" label="Empresas" />
-            {returnButonHeader()}
+            <ProfileMenu />
         </div>
     );
 }
@@ -44,7 +46,8 @@ const renderMobile = (menuOpen, setMenuOpen) => (
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-white z-50 navItem btn">
                 {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-            {returnButonHeader()}
+            <ProfileMenu />
+
         </div>
 
         {menuOpen && (
