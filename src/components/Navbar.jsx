@@ -44,8 +44,7 @@ const renderMobile = (menuOpen, setMenuOpen) => (
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-white z-50 navItem btn">
                 {menuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-
-
+            {returnButonHeader()}
         </div>
 
         {menuOpen && (
@@ -54,7 +53,6 @@ const renderMobile = (menuOpen, setMenuOpen) => (
                 <NavItem path="/about" label="Sobre Nosotros" />
                 <NavItem path="/search" label="Buscar" />
                 <NavItem path="/companies" label="Empresas" />
-                {returnButonHeader()}
             </div>
         )}
     </>
