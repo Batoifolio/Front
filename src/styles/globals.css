@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&family=Roboto&family=Lato&display=swap');
 @import url('./scrollbar.css');
@@ -172,6 +172,12 @@ nav {
   * {
     color: var(--color-text-default);
   }
+}
+
+
+.btn-profile * {
+  border-radius: 50%;
+  width: 40px;
 }
 
 .margin-x {

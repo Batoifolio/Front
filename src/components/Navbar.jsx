@@ -1,18 +1,39 @@
 import NavItem from './NavItem';
 import useMediaQuery from '../hooks/useMediaQuery'; // asegúrate de la ruta
 import { Menu, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Link from 'next/link';
+import { AuthContext } from '@/context/AuthContext';
+
+// esta registrado, si esta registrao, tiene que aparecer el boton para ir al perfil
+// returnButonHeader retorna el boton correspondinte, en caso de no estar logeado, ternoa el boton de login
+function returnButonHeader() {
+    const { user } = useContext(AuthContext);
+    // const user = null;
+    if (user) {
+
+        return (
+            <span className="btn-profile">
+                <NavItem path="/profile" label={<img src={user.fotoPerfil} alt={user.nombre} className="profile-pic" />} />
+            </span>
+        );
+    }
+    return (
+        <span className="btn-header">
+            <NavItem path="/login" label="Log In" />
+        </span>
+    );
+}
+
+
 const renderDesktop = () => {
     return (
         <div className="navList flex gap-4">
-            <NavItem path="/" label='<i class="bi bi-house-fill"></i>' />
+            <NavItem path="/" label={<i class="bi bi-house-fill"></i>} />
             <NavItem path="/about" label="Sobre Nosotros" />
             <NavItem path="/search" label="Buscar" />
             <NavItem path="/companies" label="Empresas" />
-            <span className="btn-header">
-                <NavItem path="/login" label="Log In" />
-            </span>
+            {returnButonHeader()}
         </div>
     );
 }
@@ -29,13 +50,11 @@ const renderMobile = (menuOpen, setMenuOpen) => (
 
         {menuOpen && (
             <div className="navList drop-menu">
-                <NavItem path="/" label='<i class="bi bi-house-fill"></i>' />
+                <NavItem path="/" label={<i class="bi bi-house-fill"></i>} />
                 <NavItem path="/about" label="Sobre Nosotros" />
                 <NavItem path="/search" label="Buscar" />
                 <NavItem path="/companies" label="Empresas" />
-                <span className="btn-header">
-                    <NavItem path="/login" label="Log In" />
-                </span>
+                {returnButonHeader()}
             </div>
         )}
     </>
