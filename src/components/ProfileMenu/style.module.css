@@ -1,5 +1,6 @@
 .profileContainer {
     position: relative;
+    display: flex;
 }
 
 .profileButton {

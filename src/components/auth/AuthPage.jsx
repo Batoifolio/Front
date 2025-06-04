@@ -152,6 +152,7 @@ export default function AuthPage({ mode = 'login' }) {
 
     if (mode === 'logout') {
         useEffect(() => {
+            document.title = 'Batoifolio - Cerrar Sesión';
             if (user && user !== null) {
                 Swal.fire({
                     title: 'Cerrar sesión',
@@ -165,6 +166,8 @@ export default function AuthPage({ mode = 'login' }) {
                         logout(); // usa el método del contexto
                         Swal.close();
                         router.push('/login');
+                    } else {
+                        router.push('/');
                     }
                 });
             } else {

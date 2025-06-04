@@ -204,7 +204,7 @@ main {
   background: var(--color-bg-main);
   border-radius: 12px;
   box-shadow: 0 10px 30px var(--color-box-shadow-main);
-  min-height: 78.3vh;
+  min-height: 80vh;
 }
 
 a {
@@ -271,7 +271,7 @@ textarea {
 
 footer {
   margin-top: 3rem;
-  padding: 1rem;
+  padding: 1.1rem;
   text-align: center;
   color: var(--color-footer-text);
   font-size: 0.9rem;

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import styles from './edit.module.css';
 import { useRouter } from 'next/router';
@@ -7,6 +7,10 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 import { getToken, gatTokenByHeaderRequest } from '@/utils/auth/token';
 
 function ProfilePage() {
+  useEffect(() => {
+    document.title = 'Batoifolio - Editar Perfil';
+  }, []);
+
   const { user, login: setAuthUser, logout } = useContext(AuthContext);
   const token = getToken();
   const router = useRouter();

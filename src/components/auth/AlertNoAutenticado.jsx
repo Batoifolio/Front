@@ -7,7 +7,7 @@ export default function AlertNoAutenticado() {
 
     useEffect(() => {
         Swal.fire({
-            title: 'No has iniciado sesión',
+            title: 'No tienes sesión Activa',
             text: 'Debes iniciar sesión para continuar.',
             icon: 'warning',
             confirmButtonText: 'Ir al login',

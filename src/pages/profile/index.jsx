@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import styles from './style.module.css';
 import Link from 'next/link';
 
 function ProfilePage() {
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    document.title = 'Batoifolio - Perfil';
+  }, []);
 
   return (
     <div className={styles.layout}>
@@ -39,11 +43,11 @@ function ProfilePage() {
       </div>
 
       <div className={styles.buttons}>
-        <Link href="/profile/edit" className={styles.editButton}>
-          Editar Perfil
-        </Link>
         <Link href="/logout" className={styles.logoutButton}>
           Cerrar Sesión
+        </Link>
+        <Link href="/profile/edit" className={styles.editButton}>
+          Editar Perfil
         </Link>
       </div>
     </div>
