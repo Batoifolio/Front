@@ -4,10 +4,6 @@ import { fetchUser, saveUser, getUser, clearUser } from '@/utils/auth/user';
 
 export const AuthContext = createContext();
 
-export function isRegistered() {
-    return getUser() !== null;
-}
-
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);

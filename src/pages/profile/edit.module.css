@@ -17,6 +17,19 @@
 
 .layout input {
     margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.layout label {
+    cursor: pointer;
+}
+
+.layout label:hover input {
+    transform: scale(1.02);
+}
+
+.layout input:focus {
+    transform: scale(1.05);
 }
 
 .header {

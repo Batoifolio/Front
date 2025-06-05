@@ -27,6 +27,39 @@ function ProfilePage() {
     descripcion: user.descripcion || '',
   });
 
+  const [familias, setFamilias] = useState([]);
+  const [grados, setGrados] = useState([]);
+
+  useEffect(() => {
+    const fetchFamilias = async () => {
+      try {
+        const response = await fetch(apiUrl + 'ramas');
+        if (!response.ok) {
+          throw new Error('Error al cargar las familias');
+        }
+        const dataFamilias = await response.json();
+        setFamilias(dataFamilias.data);
+      } catch (error) {
+        setServerError(error.message);
+      }
+    };
+    const fetchGrados = async () => {
+      try {
+        const response = await fetch(apiUrl + 'grados');
+        if (!response.ok) {
+          throw new Error('Error al cargar los grados');
+        }
+        const dataGrados = await response.json();
+        setGrados(dataGrados.data);
+      } catch (error) {
+        setServerError(error.message);
+      }
+    };
+
+    fetchFamilias();
+    fetchGrados();
+  }, []);
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
@@ -55,22 +88,25 @@ function ProfilePage() {
     setLoading(true);
 
     try {
+      // parsear a numero ramaId y gradoId
+      form.ramaId = parseInt(form.ramaId);
+      form.gradoId = parseInt(form.gradoId);
+
       const res = await fetch(apiUrl + 'users/' + user.id, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${token}`,
         },
         body: JSON.stringify(form),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        if (data.errors) {
-          setErrors(data.errors);
-        } else {
-          setServerError('Error al guardar los datos');
-        }
+        // if (data.message) {
+        //   setErrors(data.message);
+        // } else {
+        setServerError('Error al guardar los datos: ' + data.message);
+        // }
       } else {
         const rescquest = await res.json();
         const newToken = gatTokenByHeaderRequest(res);
@@ -97,7 +133,6 @@ function ProfilePage() {
             onChange={handleChange}
             className={styles.input}
           />
-          {errors.fotoPerfil && <p className={styles.error}>{errors.fotoPerfil}</p>}
         </div>
         <div className={styles.userInfo}>
           <label>
@@ -109,7 +144,6 @@ function ProfilePage() {
               className={styles.input}
               disabled
             />
-            {errors.username && <p className={styles.error}>{errors.username}</p>}
           </label>
           <label>
             <strong>Nombre:</strong>
@@ -120,7 +154,6 @@ function ProfilePage() {
               onChange={handleChange}
               className={styles.input}
             />
-            {errors.nombre && <p className={styles.error}>{errors.nombre}</p>}
           </label>
           <label>
             <strong>Apellidos:</strong>
@@ -141,7 +174,6 @@ function ProfilePage() {
               onChange={handleChange}
               className={styles.input}
             />
-            {errors.email && <p className={styles.error}>{errors.email}</p>}
           </label>
         </div>
       </div>
@@ -175,23 +207,35 @@ function ProfilePage() {
           <h3><strong>Información Académica</strong></h3>
           <label>
             <strong>Familia:</strong>
-            <input
-              type="text"
+            <select
               name="ramaId"
               value={form.ramaId}
               onChange={handleChange}
               className={styles.input}
-            />
+            >
+              <option value="">Selecciona una familia</option>
+              {familias.map(familia => (
+                <option key={familia.id} value={familia.id}>
+                  {familia.nombre}
+                </option>
+              ))}
+            </select>
           </label>
           <label>
-            <strong>PF Cursando:</strong>
-            <input
-              type="text"
+            <strong>FP Cursando:</strong>
+            <select
               name="gradoId"
               value={form.gradoId}
               onChange={handleChange}
               className={styles.input}
-            />
+            >
+              <option value="">Selecciona una familia</option>
+              {grados.map(grado => (
+                <option key={grado.id} value={grado.id}>
+                  {grado.nombre}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
       </div>

@@ -61,13 +61,19 @@
 
 .logoutBtn {
     cursor: pointer;
-    color: var(--color-text-default);
+    /* color: var(--color-text-default); */
     font-size: 14px;
     transition: all 0.2s ease;
     text-align: center;
-    background-color: var(--color-rojo);
+    /* background-color: var(--color-rojo); */
+    background: var(--color-blanco);
+    border: 2px solid var(--color-rosa);
+    color: var(--color-rosa);
+    transition: all 0.3s ease;
 }
 
 .logoutBtn:hover {
-    background: var(--color-rojo-fuerte);
+    border: 2px solid var(--color-rojo-fuerte);
+    color: var(--color-rosa-fuerte);
+    box-shadow: inset 0 0 10px 1px var(--color-rosa-fuerte);
 }

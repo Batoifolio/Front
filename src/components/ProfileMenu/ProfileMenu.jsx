@@ -41,8 +41,8 @@ export default function ProfileMenu() {
                 aria-expanded={menuOpen}
             >
                 <img
-                    src={user.fotoPerfil}
-                    alt={user.nombre}
+                    src={user.fotoPerfil || '/default-avatar.png'}
+                    alt={user.nombre || 'Usuario'}
                     className={styles.profilePic}
                 />
             </button>

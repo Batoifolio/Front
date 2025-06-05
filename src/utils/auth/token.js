@@ -9,11 +9,7 @@ function saveToken(token) {
 
 function getToken() {
     if (typeof window === 'undefined') return null;
-    return Cookies.get('token') || localStorage.getItem('authToken');
-}
-
-function isRegistered() {
-    return !!getToken();
+    return localStorage.getItem('authToken');
 }
 
 function clearToken() {
@@ -29,4 +25,4 @@ function gatTokenByHeaderRequest(request) {
     return token ? token : null;
 }
 
-export { saveToken, getToken, isRegistered, clearToken, gatTokenByHeaderRequest };
+export { saveToken, getToken, clearToken, gatTokenByHeaderRequest };
