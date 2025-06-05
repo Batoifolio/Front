@@ -32,7 +32,7 @@ function ProfilePage() {
         </div>
         <div className={styles.cardSection}>
           <h3><strong>Información Académica</strong></h3>
-          <p><strong>Familia:</strong> {user.ramaId || 'No se ha especificado.'}</p>
+          <p><strong>Familia:</strong> {user.rama?.nombre || 'No se ha especificado.'}</p>
           <p><strong>FP Cursando:</strong> {user.grado?.nombre || 'No se ha especificado.'}</p>
         </div>
       </div>
