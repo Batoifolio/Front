@@ -59,13 +59,13 @@ export function AuthProvider({ children }) {
     };
 
     const isValidToken = async () => {
-        await fetch(apiUrl + 'user', {
+        return await fetch(apiUrl + 'user', {
             method: 'GET',
         }).then(res => {
             if (!res.ok) {
                 return false;
             }
-            return true
+            return gatTokenByHeaderRequest(res);
         });
     }
 
