@@ -5,15 +5,35 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import '../styles/globals.css';
 
 import { AuthProvider, AuthContext } from '@/context/AuthContext';
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import AuthGuard from '@/components/auth/AuthGuard';
 import { patchGlobalFetch } from '@/utils/interceptedFetch';
 
 function AppContent({ Component, pageProps }) {
-  const { token, updateToken } = useContext(AuthContext);
+  const { token, updateToken, isValidToken } = useContext(AuthContext);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     patchGlobalFetch(token, updateToken);
+
+
+
+    if (!token) return;
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    const checkToken = async () => {
+      const isValid = await isValidToken();
+      if (isValid) {
+        updateToken(token);
+      } else {
+        updateToken(null);
+        clearInterval(intervalRef.current);
+      }
+    };
+    checkToken();
+    intervalRef.current = setInterval(checkToken, 4 * 60 * 1000);
+    return () => clearInterval(intervalRef.current);
   }, [token]);
 
   const PageComponent = Component.auth ? (
