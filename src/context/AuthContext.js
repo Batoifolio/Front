@@ -1,25 +1,22 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { getToken, saveToken, clearToken } from '@/utils/auth/token';
+import { getToken, saveToken, clearToken, gatTokenByHeaderRequest } from '@/utils/auth/token';
 import { fetchUser, saveUser, getUser, clearUser } from '@/utils/auth/user';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = getToken();
+        const storedtoken = getToken();
         const storedUser = getUser();
 
-        if (!token) {
-            setUser(null);
-            setLoading(false);
-            return;
-        }
-
-        if (storedUser) {
+        if (storedUser && storedtoken) {
             setUser(storedUser);
+            setToken(storedtoken);
             setLoading(false);
         } else {
             fetchUser()
@@ -27,11 +24,14 @@ export function AuthProvider({ children }) {
                     if (!res.success) throw new Error('Token inválido');
                     setUser(res.data);
                     saveUser(res.data);
+                    setToken(gatTokenByHeaderRequest(res));
+                    saveToken(gatTokenByHeaderRequest(res));
                 })
                 .catch(() => {
+                    setToken(null);
                     clearToken();
-                    clearUser();
                     setUser(null);
+                    clearUser();
                 })
                 .finally(() => {
                     setLoading(false);
@@ -40,19 +40,37 @@ export function AuthProvider({ children }) {
     }, []);
 
     function login(token, userData) {
+        setToken(token);
         saveToken(token);
-        saveUser(userData);
         setUser(userData);
+        saveUser(userData);
     }
 
     function logout() {
+        setToken(null);
         clearToken();
-        clearUser();
         setUser(null);
+        clearUser();
+    }
+
+    const updateToken = (newToken) => {
+        setToken(newToken);
+        saveToken(newToken);
+    };
+
+    const isValidToken = async () => {
+        await fetch(apiUrl + 'user', {
+            method: 'GET',
+        }).then(res => {
+            if (!res.ok) {
+                return false;
+            }
+            return true
+        });
     }
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout }}>
+        <AuthContext.Provider value={{ user, token, updateToken, loading, login, logout, isValidToken }}>
             {children}
         </AuthContext.Provider>
     );

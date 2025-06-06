@@ -3,21 +3,19 @@ import Layout from '@/components/Layout';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import '../styles/globals.css';
+
 import { AuthProvider, AuthContext } from '@/context/AuthContext';
-import { useContext, useEffect } from 'react';
-import AlertNoAutenticado from '@/components/auth/AlertNoAutenticado';
+import { useEffect, useContext } from 'react';
+import AuthGuard from '@/components/auth/AuthGuard';
 import { patchGlobalFetch } from '@/utils/interceptedFetch';
 
-function AuthGuard({ children }) {
-  const { user, loading } = useContext(AuthContext);
+function AppContent({ Component, pageProps }) {
+  const { token, updateToken } = useContext(AuthContext);
 
-  if (loading) return <div>Cargando...</div>;
-  if (!user) return <AlertNoAutenticado />;
+  useEffect(() => {
+    patchGlobalFetch(token, updateToken);
+  }, [token]);
 
-  return children;
-}
-
-function MyApp({ Component, pageProps }) {
   const PageComponent = Component.auth ? (
     <AuthGuard>
       <Component {...pageProps} />
@@ -26,13 +24,13 @@ function MyApp({ Component, pageProps }) {
     <Component {...pageProps} />
   );
 
-  useEffect(() => {
-    patchGlobalFetch();
-  }, []);
+  return <Layout>{PageComponent}</Layout>;
+}
 
+function MyApp(props) {
   return (
     <AuthProvider>
-      <Layout>{PageComponent}</Layout>
+      <AppContent {...props} />
     </AuthProvider>
   );
 }
