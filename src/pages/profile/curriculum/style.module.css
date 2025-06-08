@@ -167,7 +167,7 @@
 }
 
 .editButton,
-.logoutButton {
+.cancelButton {
     padding: 0.6rem 1.2rem;
     border: none;
     border-radius: 0.8rem;
@@ -187,13 +187,13 @@
     color: var(--color-blanco);
 }
 
-.logoutButton {
+.cancelButton {
     border: 2px solid var(--color-rosa);
     color: var(--color-rosa);
     transition: all 0.3s ease;
 }
 
-.logoutButton:hover {
+.cancelButton:hover {
     border: 2px solid var(--color-rojo-fuerte);
     color: var(--color-rosa-fuerte);
     box-shadow: inset 0 0 10px 1px var(--color-rosa-fuerte);

@@ -54,6 +54,11 @@ export default function ProfileMenu() {
                             Ver perfil
                         </button>
                     </Link>
+                    <Link href="/profile/curriculum" className={styles.profileBtn} onClick={() => setMenuOpen(false)}>
+                        <button>
+                            Ver Curriculum
+                        </button>
+                    </Link>
                     <button
                         className={styles.logoutBtn}
                         onClick={() => {

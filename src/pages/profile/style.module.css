@@ -92,7 +92,8 @@
     color: var(--color-rosa);
 }
 
-.buttons {
+.buttons,
+.button {
     grid-area: "buttons";
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -100,6 +101,11 @@
     background-color: var(--color-blanco);
     padding: 10px;
     border-radius: 1rem;
+}
+
+.button {
+    grid-area: "buttons";
+    grid-template-columns: 1fr;
 }
 
 .editButton,

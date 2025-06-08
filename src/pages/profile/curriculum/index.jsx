@@ -1,82 +1,25 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
+import BackArrow from '@/components/BackArrow';
+import Link from 'next/link';
 import styles from './style.module.css';
-import {
-    DndContext,
-    closestCenter,
-    PointerSensor,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core';
-import {
-    arrayMove,
-    SortableContext,
-    useSortable,
-    verticalListSortingStrategy
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 
-function SortableExperienceItem({ id, index, data, onChange, onRemove }) {
-    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
-
-    const style = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-    };
-
+function ExperienceItem({ index, data }) {
     return (
-        <div ref={setNodeRef} style={style} className={styles.experienceItem}>
+        <div className={styles.experienceItem}>
             <div className={styles.experienceHeader}>
-                <button
-                    type="button"
-                    {...attributes}
-                    {...listeners}
-                    className={styles.dragHandle}
-                    title="Arrastrar para reordenar"
-                >
-                    ☰
-                </button>
                 <strong>Experiencia #{index + 1}</strong>
             </div>
-
-            <label>Nombre de Empresa:</label>
-            <input
-                type="text"
-                value={data.empresa}
-                onChange={(e) => onChange(index, 'empresa', e.target.value)}
-            />
-            <label>Cargo:</label>
-            <input
-                type="text"
-                value={data.cargo}
-                onChange={(e) => onChange(index, 'cargo', e.target.value)}
-            />
-            <label>Descripción:</label>
-            <textarea
-                value={data.descripcion}
-                onChange={(e) => onChange(index, 'descripcion', e.target.value)}
-            />
-            <label>Fecha Inicio:</label>
-            <input
-                type="date"
-                value={data.fechaInicio}
-                onChange={(e) => onChange(index, 'fechaInicio', e.target.value)}
-            />
-            <label>Fecha Fin:</label>
-            <input
-                type="date"
-                value={data.fechaFin}
-                onChange={(e) => onChange(index, 'fechaFin', e.target.value)}
-            />
-            <button type="button" onClick={() => onRemove(index)} className={styles.removeButton}>
-                Eliminar
-            </button>
+            <p><strong>Empresa:</strong> {data.empresa}</p>
+            <p><strong>Cargo:</strong> {data.cargo}</p>
+            <p><strong>Descripción:</strong> {data.descripcion}</p>
+            <p><strong>Fecha Inicio:</strong> {data.fechaInicio}</p>
+            <p><strong>Fecha Fin:</strong> {data.fechaFin}</p>
         </div>
     );
 }
 
-
-function CurriculumEditorPage() {
+function CurriculumViewPage() {
     const { user } = useContext(AuthContext);
     const [curriculum, setCurriculum] = useState({
         titulo: '',
@@ -87,17 +30,17 @@ function CurriculumEditorPage() {
     });
 
     useEffect(() => {
-        document.title = 'Batoifolio - Editor de Currículum';
+        document.title = 'Batoifolio - Currículum';
         const fetchCurriculum = async () => {
             try {
                 // const res = await fetch(`/api/curriculum/${user.id}`);
                 // const data = await res.json();
-                const data = {}
+                const data = {};
                 if (data?.curriculum) {
                     setCurriculum({
                         titulo: data.curriculum.titulo || '',
                         resumen: data.curriculum.resumen || '',
-                        experiencia: (data.curriculum.experiencia || addExperience()).map((exp) => ({
+                        experiencia: (data.curriculum.experiencia || []).map((exp) => ({
                             ...exp,
                             id: exp.id || crypto.randomUUID()
                         })),
@@ -112,136 +55,59 @@ function CurriculumEditorPage() {
         if (user?.id) fetchCurriculum();
     }, [user]);
 
-    const handleChange = (e) => {
-        setCurriculum({ ...curriculum, [e.target.name]: e.target.value });
-    };
-
-    const handleExperienceChange = (index, field, value) => {
-        const newExperiencia = [...curriculum.experiencia];
-        newExperiencia[index][field] = value;
-        setCurriculum({ ...curriculum, experiencia: newExperiencia });
-    };
-
-    const addExperience = () => {
-        setCurriculum((prev) => ({
-            ...prev,
-            experiencia: [
-                ...prev.experiencia,
-                {
-                    id: crypto.randomUUID(), // <-- ID ÚNICO
-                    empresa: '',
-                    cargo: '',
-                    descripcion: '',
-                    fechaInicio: '',
-                    fechaFin: ''
-                }
-            ]
-        }));
-    };
-
-
-    const removeExperience = (index) => {
-        const newExperiencia = curriculum.experiencia.filter((_, i) => i !== index);
-        setCurriculum({ ...curriculum, experiencia: newExperiencia });
-    };
-
-    const sensors = useSensors(useSensor(PointerSensor));
-
-    const handleDragEnd = (event) => {
-        const { active, over } = event;
-        if (!over || active.id === over.id) return;
-
-        const oldIndex = curriculum.experiencia.findIndex((item) => item.id === active.id);
-        const newIndex = curriculum.experiencia.findIndex((item) => item.id === over.id);
-
-        const reordered = arrayMove(curriculum.experiencia, oldIndex, newIndex);
-        setCurriculum((prev) => ({
-            ...prev,
-            experiencia: reordered
-        }));
-    };
-
-    const handleSave = async () => {
-        try {
-            await fetch(`/api/curriculum/${user.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(curriculum)
-            });
-            alert('Currículum guardado con éxito.');
-        } catch (err) {
-            console.error('Error al guardar:', err);
-            alert('Hubo un problema al guardar el currículum.');
-        }
-    };
-
     return (
         <div className={styles.layout}>
             <div className={styles.header}>
+                <BackArrow href="/profile" label="Perfil" />
                 <div className={styles.avatar}>
                     <img src={user.fotoPerfil || '/default-avatar.png'} alt="Avatar" />
                 </div>
                 <div className={styles.userInfo}>
-                    <h1><strong>Editor de Currículum para:</strong> @{user.username}</h1>
+                    <h1><strong>Currículum de:</strong> @{user.username}</h1>
                 </div>
             </div>
 
             <div className={styles.mainInfo}>
                 <div className={styles.cardSection}>
                     <label><strong>Título Profesional</strong></label>
-                    <input type="text" name="titulo" value={curriculum.titulo} onChange={handleChange} />
+                    <p>{curriculum.titulo}</p>
                 </div>
 
                 <div className={styles.cardSection}>
                     <label><strong>Resumen Profesional</strong></label>
-                    <textarea name="resumen" value={curriculum.resumen} onChange={handleChange} />
+                    <p>{curriculum.resumen}</p>
                 </div>
 
                 <div className={styles.cardSection}>
                     <label><strong>Experiencia Laboral</strong></label>
-                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                        <SortableContext
-                            items={curriculum.experiencia.map((exp) => exp.id)}
-                            strategy={verticalListSortingStrategy}
-                        >
-                            {curriculum.experiencia.map((exp, index) => (
-                                <SortableExperienceItem
-                                    key={exp.id}
-                                    id={exp.id}
-                                    index={index}
-                                    data={exp}
-                                    onChange={handleExperienceChange}
-                                    onRemove={removeExperience}
-                                />
-                            ))}
-                        </SortableContext>
-
-                    </DndContext>
-                    <button type="button" onClick={addExperience} className={styles.editButton}>
-                        Añadir experiencia
-                    </button>
+                    {curriculum.experiencia.length === 0 && <p>No hay experiencias registradas.</p>}
+                    {curriculum.experiencia.map((exp, index) => (
+                        <ExperienceItem key={exp.id} index={index} data={exp} />
+                    ))}
                 </div>
 
                 <div className={styles.cardSection}>
                     <label><strong>Educación</strong></label>
-                    <textarea name="educacion" value={curriculum.educacion} onChange={handleChange} />
+                    <p>{curriculum.educacion}</p>
                 </div>
 
                 <div className={styles.cardSection}>
                     <label><strong>Habilidades</strong></label>
-                    <textarea name="habilidades" value={curriculum.habilidades} onChange={handleChange} />
+                    <p>{curriculum.habilidades}</p>
                 </div>
-            </div>
-
-            <div className={styles.buttons}>
-                <button className={styles.editButton} onClick={handleSave}>
-                    Guardar Currículum
-                </button>
+                <div className={styles.buttons}>
+                    <button type="submit" className={styles.editButton}>
+                        Descargar Currículum
+                    </button>
+                    <Link href="/profile/curriculum/edit" className={styles.editButton}>
+                        Editar Currículum
+                    </Link>
+                </div>
             </div>
         </div>
     );
 }
 
-CurriculumEditorPage.auth = true;
+CurriculumViewPage.auth = true;
 
-export default CurriculumEditorPage;
+export default CurriculumViewPage;

@@ -42,6 +42,11 @@ function ProfilePage() {
         <p>{user.descripcion || 'No hay biografía disponible.'}</p>
       </div>
 
+      <div className={styles.button}>
+        <Link href="/profile/curriculum" className={styles.editButton}>
+          Ver Curriculum
+        </Link>
+      </div>
       <div className={styles.buttons}>
         <Link href="/logout" className={styles.logoutButton}>
           Cerrar Sesión
