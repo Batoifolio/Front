@@ -18,6 +18,7 @@ function AppContent({ Component, pageProps }) {
 
 
 
+
     if (!token) return;
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -26,15 +27,17 @@ function AppContent({ Component, pageProps }) {
       const isValid = await isValidToken();
       if (isValid) {
         updateToken(token);
+        patchGlobalFetch(token, updateToken);
       } else {
         updateToken(null);
         clearInterval(intervalRef.current);
       }
+      console.log("token: " + token);
     };
     checkToken();
     intervalRef.current = setInterval(checkToken, 4 * 60 * 1000);
     return () => clearInterval(intervalRef.current);
-  }, [token]);
+  }, [token, updateToken, isValidToken]);
 
   const PageComponent = Component.auth ? (
     <AuthGuard>
