@@ -149,12 +149,15 @@
 }
 
 .cancelButton {
-    background: var(--color-rojo);
+    border: 2px solid var(--color-rosa);
+    color: var(--color-rosa);
+    transition: all 0.3s ease;
 }
 
 .cancelButton:hover {
-    background: var(--color-rojo-fuerte);
-    color: var(--color-blanco);
+    border: 2px solid var(--color-rojo-fuerte);
+    color: var(--color-rosa-fuerte);
+    box-shadow: inset 0 0 10px 1px var(--color-rosa-fuerte);
 }
 
 @media (max-width: 659px) {

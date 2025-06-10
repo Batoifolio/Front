@@ -1,7 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import Link from 'next/link';
+import TagInput from './TagInput';
+import { useRouter } from 'next/router';
 import styles from './style.module.css';
+import Swal from 'sweetalert2';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 import {
     DndContext,
     closestCenter,
@@ -75,6 +80,7 @@ function SortableExperienceItem({ id, index, data, onChange, onRemove }) {
         </div>
     );
 }
+
 function SortableEducationItem({ id, index, data, onChange, onRemove }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
@@ -134,43 +140,101 @@ function SortableEducationItem({ id, index, data, onChange, onRemove }) {
     );
 }
 
+function SortableIdiomaItem({ id, index, data, onChange, onRemove }) {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
+
+    return (
+        <div ref={setNodeRef} style={style} className={styles.experienceItem}>
+            <div className={styles.experienceHeader}>
+                <button
+                    type="button"
+                    {...attributes}
+                    {...listeners}
+                    className={styles.dragHandle}
+                    title="Arrastrar para reordenar"
+                >
+                    ☰
+                </button>
+                <strong>Idioma #{index + 1}</strong>
+            </div>
+
+            <label>Idioma:</label>
+            <input
+                type="text"
+                value={data.idioma}
+                onChange={(e) => onChange(index, 'idioma', e.target.value)}
+            />
+            <label>Nivel:</label>
+            <select name="" id="" onChange={(e) => onChange(index, 'nivel', e.target.value)}>
+                <option value="" disabled>Selecciona un nivel</option>
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+                <option value="C1">C1</option>
+                <option value="C2">C2</option>
+            </select>
+            <button type="button" onClick={() => onRemove(index)} className={styles.removeButton}>
+                Eliminar
+            </button>
+        </div>
+    );
+}
 
 function CurriculumEditorPage() {
     const { user } = useContext(AuthContext);
+    // const [serverError, setServerError] = useState('');
+    const router = useRouter();
     const [curriculum, setCurriculum] = useState({
         titulo: '',
         resumen: '',
         experiencia: [],
         educacion: [],
-        habilidades: ''
+        habilidades: [],
+        idiomas: []
     });
 
     useEffect(() => {
         document.title = 'Batoifolio - Editor de Currículum';
+
         const fetchCurriculum = async () => {
             try {
-                // const res = await fetch(`/api/curriculum/${user.id}`);
-                // const data = await res.json();
-                const data = {}
-                if (data?.curriculum) {
+                const res = await fetch(`${apiUrl}users/${user.id}/curriculum`);
+                const respuesta = await res.json();
+
+                if (respuesta.data) {
                     setCurriculum({
-                        titulo: data.curriculum.titulo || '',
-                        resumen: data.curriculum.resumen || '',
-                        experiencia: (data.curriculum.experiencia || addExperience()).map((exp) => ({
+                        titulo: respuesta.data?.titulo || '',
+                        resumen: respuesta.data?.resumen || '',
+                        experiencia: respuesta.data?.experiencia || [],
+                        experiencia: respuesta.data?.experiencia.map(exp => ({
                             ...exp,
-                            id: exp.id || crypto.randomUUID()
-                        })),
-                        educacion: data.curriculum.educacion || '',
-                        habilidades: data.curriculum.habilidades || ''
+                            fechaInicio: exp.fechaInicio ? new Date(exp.fechaInicio).toISOString().split('T')[0] : '',
+                            fechaFin: exp.fechaFin ? new Date(exp.fechaFin).toISOString().split('T')[0] : ''
+                        })) || [],
+                        educacion: respuesta.data?.educacion.map(exp => ({
+                            ...exp,
+                            fechaInicio: exp.fechaInicio ? new Date(exp.fechaInicio).toISOString().split('T')[0] : '',
+                            fechaFin: exp.fechaFin ? new Date(exp.fechaFin).toISOString().split('T')[0] : ''
+                        })) || [],
+                        habilidades: respuesta.data?.habilidades || [],
+                        idiomas: respuesta.data?.idiomas || [],
                     });
                 }
             } catch (err) {
                 console.error('Error al cargar el currículum:', err);
             }
         };
+
         if (user?.id) fetchCurriculum();
+
     }, [user]);
+
 
     const handleChange = (e) => {
         setCurriculum({ ...curriculum, [e.target.name]: e.target.value });
@@ -273,18 +337,68 @@ function CurriculumEditorPage() {
 
 
 
+    const handleIdiomaChange = (index, field, value) => {
+        const newIdioma = [...curriculum.idiomas];
+        newIdioma[index][field] = value;
+        setCurriculum({ ...curriculum, idiomas: newIdioma });
+    };
+
+    const addIdioma = () => {
+        setCurriculum((prev) => ({
+            ...prev,
+            idiomas: [
+                ...prev.idiomas,
+                {
+                    id: crypto.randomUUID(),
+                    idioma: '',
+                    nivel: ''
+                }
+            ]
+        }));
+    };
+
+    const removeIdioma = (index) => {
+        const newIdioma = curriculum.idiomas.filter((_, i) => i !== index);
+        setCurriculum({ ...curriculum, idiomas: newIdioma });
+    };
+
+    const handleIdiomaDragEnd = (event) => {
+        const { active, over } = event;
+        if (!over || active.id === over.id) return;
+
+        const oldIndex = curriculum.idiomas.findIndex((item) => item.id === active.id);
+        const newIndex = curriculum.idiomas.findIndex((item) => item.id === over.id);
+
+        const reordered = arrayMove(curriculum.idiomas, oldIndex, newIndex);
+        setCurriculum((prev) => ({
+            ...prev,
+            idiomas: reordered
+        }));
+    };
+
+
+
 
     const handleSave = async () => {
         try {
-            await fetch(`/api/curriculum/${user.id}`, {
+            const res = await fetch(`${apiUrl}users/${user.id}/curriculum/`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(curriculum)
             });
-            alert('Currículum guardado con éxito.');
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.message || 'Error al guardar el currículum');
+            }
+            router.push('/profile/curriculum');
         } catch (err) {
-            console.error('Error al guardar:', err);
-            alert('Hubo un problema al guardar el currículum.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al Guardar',
+                text: err.message,
+                confirmButtonText: 'Aceptar',
+            })
+            return;
         }
     };
 
@@ -362,10 +476,38 @@ function CurriculumEditorPage() {
 
                 <div className={styles.cardSection}>
                     <label><strong>Habilidades</strong></label>
-                    <textarea name="habilidades" value={curriculum.habilidades} onChange={handleChange} />
+                    <TagInput
+                        tags={curriculum.habilidades}
+                        setTags={(newTags) =>
+                            setCurriculum({ ...curriculum, habilidades: newTags })
+                        }
+                    />
                 </div>
-            </div>
+                <div className={styles.cardSection}>
+                    <label><strong>Idiomas</strong></label>
+                    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleIdiomaDragEnd}>
+                        <SortableContext
+                            items={curriculum.idiomas.map((edu) => edu.id)}
+                            strategy={verticalListSortingStrategy}
+                        >
+                            {curriculum.idiomas.map((idi, index) => (
+                                <SortableIdiomaItem
+                                    key={idi.id}
+                                    id={idi.id}
+                                    index={index}
+                                    data={idi}
+                                    onChange={handleIdiomaChange}
+                                    onRemove={removeIdioma}
+                                />
+                            ))}
+                        </SortableContext>
+                    </DndContext>
+                    <button type="button" onClick={addIdioma} className={styles.editButton}>
+                        Añadir idioma
+                    </button>
+                </div>
 
+            </div>
             <div className={styles.buttons}>
                 <Link href="/profile/curriculum" className={styles.cancelButton}>Cancelar</Link>
                 <button className={styles.editButton} onClick={handleSave}>

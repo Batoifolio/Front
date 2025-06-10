@@ -3,6 +3,7 @@ import { AuthContext } from '@/context/AuthContext';
 import styles from './edit.module.css';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 import { getToken, gatTokenByHeaderRequest } from '@/utils/auth/token';
 
@@ -29,6 +30,10 @@ function ProfilePage() {
 
   const [familias, setFamilias] = useState([]);
   const [grados, setGrados] = useState([]);
+
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
 
   useEffect(() => {
     const fetchFamilias = async () => {
@@ -58,11 +63,22 @@ function ProfilePage() {
 
     fetchFamilias();
     fetchGrados();
-  }, []);
 
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState('');
+    if (serverError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al Guardar',
+        text: serverError,
+        confirmButtonText: 'Aceptar',
+      }).then(() => {
+        setServerError('');
+      });
+
+    }
+
+  }, [serverError]);
+
+
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -105,7 +121,7 @@ function ProfilePage() {
         // if (data.message) {
         //   setErrors(data.message);
         // } else {
-        setServerError('Error al guardar los datos: ' + data.message);
+        setServerError(data.message);
         // }
       } else {
         const rescquest = await res.json();
@@ -252,7 +268,7 @@ function ProfilePage() {
         />
       </div>
 
-      {serverError && <p className={styles.error}>{serverError}</p>}
+
 
       <div className={styles.buttons}>
         <Link href="/profile" className={styles.cancelButton}>Cancelar</Link>
