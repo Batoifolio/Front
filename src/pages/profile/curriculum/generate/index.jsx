@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 import dynamic from 'next/dynamic';
 
 // Solo carga en el cliente
 const PDFViewer = dynamic(() => import('@/components/CurriculumPDF'), { ssr: false });
-
+// todo limitar las experiencias y educacion a 3 cada una, si hay más, que no se muestren
 const data = {
     titulo: "Desarrollador Frontend",
     resumen: "Desarrollador entusiasta con experiencia en la creación de interfaces de usuario atractivas y funcionales utilizando tecnologías modernas. Comprometido con la mejora continua y la experiencia del usuario.",
@@ -58,14 +59,6 @@ const data = {
             fechaInicio: "2021-01-01",
             fechaFin: "2021-05-31"
         },
-        {
-            id: "e3456789-01ab-cdef-2345-6789abcdef01",
-            institucion: "Centro de Formación Digital",
-            titulo: "Curso de React y Redux",
-            descripcion: "Curso práctico sobre desarrollo de aplicaciones con React y gestión de estado con Redux.",
-            fechaInicio: "2022-01-01",
-            fechaFin: "2022-03-31"
-        },
     ],
     habilidades: [
         "React", "JavaScript", "CSS", "HTML", "Git", "Figma", "Redux", "Node.js", "TypeScript", "Responsive Design", "Testing"
@@ -96,12 +89,42 @@ const data = {
 
 
 const CVPage = () => {
+    const user = {
+        "id": 1,
+        "nombre": "Jordi",
+        "apellidos": "Gisbert",
+        "username": "jordiGisbert",
+        "email": "jordigisbert@batoifolio.com",
+        "password": "$2b$10$qxchuQmrb5Me2.K0/nNCkeXSrP/iRfwRmpu9SqVQmAfDalVX5xv6G",
+        "pueblo": "Alicante",
+        "gradoId": 1,
+        "ramaId": 1,
+        "estado": "conectado",
+        "fotoPerfil": "https://ui-avatars.com/api/?uppercase=false&name=admin+",
+        "descripcion": "Administrar.",
+        "telefono": "611111111",
+        "ultimaConexion": "2025-06-11T16:26:58.000Z",
+        "rolId": null,
+        "empresaId": null,
+        "buscaEmpresa": false,
+        "visibilidad": true,
+        "creadoEn": "2025-06-11T16:26:58.000Z",
+        "grado": {
+            "id": 1,
+            "nombre": "2 DAW"
+        },
+        "rama": {
+            "id": 1,
+            "nombre": "Informática"
+        },
+    }
     return (
         <div style={{ padding: '40px' }}>
             <h1>Curriculum del Alumno</h1>
 
             {/* Aquí pintas el botón para descargar */}
-            <PDFViewer data={data} />
+            <PDFViewer data={data} user={user} />
+
         </div>
     );
 };

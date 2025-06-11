@@ -1,14 +1,37 @@
 import React from 'react';
-import { PDFDownloadLink, Document, Page, Text, View } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { pdfStyles as styles } from './pdfStyles';
+const MyDocument = ({ data, user }) => (
 
-const MyDocument = ({ data }) => (
-    <Document>
+    <Document >
         <Page size="A4" style={styles.page}>
-            <View style={styles.header}>
-                <Text style={styles.name}>{data.titulo}</Text>
-                <Text style={styles.summary}>{data.resumen}</Text>
+
+            {/* Cabecera con foto y datos personales */}
+            <View style={styles.headerPersonal}>
+
+                <View style={styles.avatarContainer}>
+                    {/* <Image src={user.fotoPerfil} style={styles.avatar} /> */}
+                    <Image src="https://avatars.githubusercontent.com/u/160643778?s=400&u=b53b18d55f4afe5c375496d699865b0bb7582935&v=4.png" style={styles.avatar} />
+                </View>
+
+                <View style={styles.personalData}>
+                    <Text style={styles.name}>{user.nombre} {user.apellidos}</Text>
+                    <Text style={styles.jobTitle}>{data.titulo}</Text>
+                    <Text style={styles.summary}>{data.resumen}</Text>
+
+                    <View style={styles.contactInfo}>
+                        <Text>Email: {user.email}</Text>
+                        <Text>Teléfono: {user.telefono}</Text>
+                        <Text>Ubicación: {user.pueblo}</Text>
+                        <Text>Grado: {user.grado?.nombre}</Text>
+                        <Text>Rama: {user.rama?.nombre}</Text>
+                    </View>
+                </View>
+
             </View>
+
+            {/* Después seguimos con el resto igual */}
+            {/* Experiencia, Educación, Habilidades/Idiomas, etc */}
 
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Experiencia</Text>
@@ -23,6 +46,7 @@ const MyDocument = ({ data }) => (
                 ))}
             </View>
 
+            {/* Educación */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Educación</Text>
                 {data.educacion.map(edu => (
@@ -34,12 +58,11 @@ const MyDocument = ({ data }) => (
                 ))}
             </View>
 
+            {/* Habilidades e idiomas (ya con las dos columnas que hicimos antes) */}
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Habilidades & Idiomas</Text>
 
                 <View style={styles.skillsLanguagesContainer}>
-
-                    {/* Habilidades */}
                     <View style={styles.skillsSection}>
                         <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Habilidades</Text>
                         <View style={styles.skillsContainer}>
@@ -49,7 +72,6 @@ const MyDocument = ({ data }) => (
                         </View>
                     </View>
 
-                    {/* Idiomas */}
                     <View style={styles.languagesSection}>
                         <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Idiomas</Text>
                         {data.idiomas.map((idioma, idx) => (
@@ -58,18 +80,19 @@ const MyDocument = ({ data }) => (
                             </Text>
                         ))}
                     </View>
-
                 </View>
             </View>
 
         </Page>
-    </Document>
+    </Document >
 );
 
-const PDFViewer = ({ data }) => (
-    <PDFDownloadLink document={<MyDocument data={data} />} fileName="cv.pdf">
+
+const PDFViewer = ({ data, user }) => (
+    <PDFDownloadLink document={<MyDocument data={data} user={user} />} fileName="cv.pdf">
         {({ loading }) => (loading ? 'Generando PDF...' : 'Descargar CV')}
     </PDFDownloadLink>
 );
+
 
 export default PDFViewer;

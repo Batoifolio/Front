@@ -12,6 +12,37 @@ export const pdfStyles = StyleSheet.create({
         paddingBottom: 10,
         marginBottom: 20
     },
+    headerPersonal: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        borderBottom: '2 solid #2980b9',
+        paddingBottom: 10
+    },
+    avatarContainer: {
+        width: 100,
+        height: 100,
+        marginRight: 20
+    },
+    avatar: {
+        width: 100,
+        height: 100,
+        borderRadius: 50
+    },
+    personalData: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    jobTitle: {
+        fontSize: 14,
+        marginTop: 4,
+        color: '#34495e'
+    },
+    contactInfo: {
+        fontSize: 10,
+        marginTop: 8,
+        color: '#7f8c8d',
+        lineHeight: 1.4
+    },
     name: {
         fontSize: 26,
         fontWeight: 'bold',
