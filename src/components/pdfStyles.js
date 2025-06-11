@@ -1,6 +1,19 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
 export const pdfStyles = StyleSheet.create({
+    iconosApp: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        flexDirection: 'row',
+        opacity: 0.8,
+        marginRight: 20,
+        gap: 5
+    },
+    icon: {
+        width: 50,
+        height: 50,
+    },
     page: {
         padding: 40,
         fontFamily: 'Helvetica',

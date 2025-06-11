@@ -6,6 +6,10 @@ const MyDocument = ({ data, user }) => (
 
     <Document >
         <Page size="A4" style={styles.page}>
+            <View style={styles.iconosApp}>
+                <Image src="/batoi-icon.png" style={styles.icon} />
+                <Image src="/batoifolio-icon.png" style={styles.icon} />
+            </View>
 
             {/* Cabecera con foto y datos personales */}
             <View style={styles.headerPersonal}>
