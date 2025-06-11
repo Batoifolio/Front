@@ -170,7 +170,12 @@ function SortableIdiomaItem({ id, index, data, onChange, onRemove }) {
                 onChange={(e) => onChange(index, 'idioma', e.target.value)}
             />
             <label>Nivel:</label>
-            <select name="" id="" onChange={(e) => onChange(index, 'nivel', e.target.value)}>
+            <select
+                name=""
+                id=""
+                value={data.nivel}  // <--- Aquí es la clave
+                onChange={(e) => onChange(index, 'nivel', e.target.value)}
+            >
                 <option value="" disabled>Selecciona un nivel</option>
                 <option value="A1">A1</option>
                 <option value="A2">A2</option>
@@ -179,6 +184,7 @@ function SortableIdiomaItem({ id, index, data, onChange, onRemove }) {
                 <option value="C1">C1</option>
                 <option value="C2">C2</option>
             </select>
+
             <button type="button" onClick={() => onRemove(index)} className={styles.removeButton}>
                 Eliminar
             </button>
@@ -487,7 +493,7 @@ function CurriculumEditorPage() {
                     <label><strong>Idiomas</strong></label>
                     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleIdiomaDragEnd}>
                         <SortableContext
-                            items={curriculum.idiomas.map((edu) => edu.id)}
+                            items={curriculum.idiomas.map((idi) => idi.id)}
                             strategy={verticalListSortingStrategy}
                         >
                             {curriculum.idiomas.map((idi, index) => (
