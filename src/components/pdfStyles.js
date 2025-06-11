@@ -49,6 +49,19 @@ export const pdfStyles = StyleSheet.create({
         fontSize: 10,
         color: '#2c3e50'
     },
+    skillsLanguagesContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 20 // esto es opcional, depende de la versión, si no funciona usamos padding o margin
+    },
+    skillsSection: {
+        flex: 1,
+        marginRight: 10
+    },
+    languagesSection: {
+        flex: 1,
+        marginLeft: 10
+    },
     skillsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap'
@@ -66,4 +79,5 @@ export const pdfStyles = StyleSheet.create({
         fontSize: 10,
         marginBottom: 4
     }
+
 });

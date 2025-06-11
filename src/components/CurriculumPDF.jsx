@@ -35,22 +35,33 @@ const MyDocument = ({ data }) => (
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Habilidades</Text>
-                <View style={styles.skillsContainer}>
-                    {data.habilidades.map((skill, idx) => (
-                        <Text key={idx} style={styles.skillBadge}>{skill}</Text>
-                    ))}
+                <Text style={styles.sectionTitle}>Habilidades & Idiomas</Text>
+
+                <View style={styles.skillsLanguagesContainer}>
+
+                    {/* Habilidades */}
+                    <View style={styles.skillsSection}>
+                        <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Habilidades</Text>
+                        <View style={styles.skillsContainer}>
+                            {data.habilidades.map((skill, idx) => (
+                                <Text key={idx} style={styles.skillBadge}>{skill}</Text>
+                            ))}
+                        </View>
+                    </View>
+
+                    {/* Idiomas */}
+                    <View style={styles.languagesSection}>
+                        <Text style={{ fontWeight: 'bold', marginBottom: 5 }}>Idiomas</Text>
+                        {data.idiomas.map((idioma, idx) => (
+                            <Text key={idx} style={styles.language}>
+                                {idioma.idioma} - Nivel: {idioma.nivel}
+                            </Text>
+                        ))}
+                    </View>
+
                 </View>
             </View>
 
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Idiomas</Text>
-                {data.idiomas.map((idioma, idx) => (
-                    <Text key={idx} style={styles.language}>
-                        {idioma.idioma} - Nivel: {idioma.nivel}
-                    </Text>
-                ))}
-            </View>
         </Page>
     </Document>
 );
