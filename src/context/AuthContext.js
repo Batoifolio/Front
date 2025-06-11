@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { getToken, saveToken, clearToken, gatTokenByHeaderRequest } from '@/utils/auth/token';
 import { fetchUser, saveUser, getUser, clearUser } from '@/utils/auth/user';
+import { getUser as getUserFromLocalStorage } from '@/utils/auth/user';
+import { getToken as getTokenFromLocalStorage } from '@/utils/auth/token';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const AuthContext = createContext();
@@ -11,14 +13,18 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         const storedtoken = getToken();
         const storedUser = getUser();
 
-        if (storedUser && storedtoken) {
+        if (storedUser) {
             setUser(storedUser);
+        }
+        if (storedtoken) {
             setToken(storedtoken);
-            setLoading(false);
-        } else {
+        }
+
+        if (storedtoken && !storedUser) {
             fetchUser()
                 .then(res => {
                     if (!res.success) throw new Error('Token inválido');
@@ -37,6 +43,7 @@ export function AuthProvider({ children }) {
                     setLoading(false);
                 });
         }
+        setLoading(false);
     }, []);
 
     function login(token, userData) {
