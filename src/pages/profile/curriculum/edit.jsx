@@ -253,20 +253,29 @@ function CurriculumEditorPage() {
     };
 
     const addExperience = () => {
-        setCurriculum((prev) => ({
-            ...prev,
-            experiencia: [
-                ...prev.experiencia,
-                {
-                    id: crypto.randomUUID(), // <-- ID ÚNICO
-                    empresa: '',
-                    cargo: '',
-                    descripcion: '',
-                    fechaInicio: '',
-                    fechaFin: ''
-                }
-            ]
-        }));
+        if (curriculum.experiencia.length < 3) {
+            setCurriculum((prev) => ({
+                ...prev,
+                experiencia: [
+                    ...prev.experiencia,
+                    {
+                        id: crypto.randomUUID(), // <-- ID ÚNICO
+                        empresa: '',
+                        cargo: '',
+                        descripcion: '',
+                        fechaInicio: '',
+                        fechaFin: ''
+                    }
+                ]
+            }));
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Límite Alcanzado',
+                text: 'Solo puedes añadir hasta 3 experiencias laborales.',
+                confirmButtonText: 'Aceptar',
+            });
+        }
     };
 
 
@@ -298,20 +307,29 @@ function CurriculumEditorPage() {
     };
 
     const addEducation = () => {
-        setCurriculum((prev) => ({
-            ...prev,
-            educacion: [
-                ...prev.educacion,
-                {
-                    id: crypto.randomUUID(),
-                    institucion: '',
-                    titulo: '',
-                    descripcion: '',
-                    fechaInicio: '',
-                    fechaFin: ''
-                }
-            ]
-        }));
+        if (curriculum.educacion.length < 3) {
+            setCurriculum((prev) => ({
+                ...prev,
+                educacion: [
+                    ...prev.educacion,
+                    {
+                        id: crypto.randomUUID(),
+                        institucion: '',
+                        titulo: '',
+                        descripcion: '',
+                        fechaInicio: '',
+                        fechaFin: ''
+                    }
+                ]
+            }));
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Límite Alcanzado',
+                text: 'Solo puedes añadir hasta 3 educaciones.',
+                confirmButtonText: 'Aceptar',
+            });
+        }
     };
 
     const removeEducation = (index) => {
@@ -350,17 +368,26 @@ function CurriculumEditorPage() {
     };
 
     const addIdioma = () => {
-        setCurriculum((prev) => ({
-            ...prev,
-            idiomas: [
-                ...prev.idiomas,
-                {
-                    id: crypto.randomUUID(),
-                    idioma: '',
-                    nivel: ''
-                }
-            ]
-        }));
+        if (curriculum.idiomas.length < 5) {
+            setCurriculum((prev) => ({
+                ...prev,
+                idiomas: [
+                    ...prev.idiomas,
+                    {
+                        id: crypto.randomUUID(),
+                        idioma: '',
+                        nivel: ''
+                    }
+                ]
+            }));
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Límite Alcanzado',
+                text: 'Solo puedes añadir hasta 5 idiomas.',
+                confirmButtonText: 'Aceptar',
+            });
+        }
     };
 
     const removeIdioma = (index) => {

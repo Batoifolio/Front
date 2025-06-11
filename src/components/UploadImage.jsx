@@ -45,7 +45,7 @@ export default function ImageUploader({ onUpload }) {
     return (
         <div>
             <input type="file" accept="image/*" onChange={handleFileChange} />
-            {preview && <img src={preview} alt="preview" style={{ width: 150 }} />}
+            {preview && <img src={preview} alt="preview" />}
             <button onClick={handleUpload} type='button' disabled={uploading}>
                 {uploading ? 'Subiendo...' : 'Subir'}
             </button>
