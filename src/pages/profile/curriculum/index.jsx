@@ -3,6 +3,8 @@ import { AuthContext } from '@/context/AuthContext';
 import BackArrow from '@/components/BackArrow';
 import Link from 'next/link';
 import styles from './style.module.css';
+import dynamic from 'next/dynamic';
+const PDFViewer = dynamic(() => import('@/components/Curriculum/CurriculumPDF'), { ssr: false });
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -82,6 +84,11 @@ function CurriculumViewPage() {
         };
 
         if (user?.id) fetchCurriculum();
+
+
+        const getPDF = async () => {
+
+        }
     }, [user]);
 
     return (
@@ -156,9 +163,7 @@ function CurriculumViewPage() {
                 </div>
 
                 <div className={styles.buttons}>
-                    <button type="button" className={styles.editButton}>
-                        Descargar Currículum
-                    </button>
+                    <PDFViewer data={curriculum} user={user} />
                     <Link href="/profile/curriculum/edit" className={styles.editButton}>
                         Editar Currículum
                     </Link>

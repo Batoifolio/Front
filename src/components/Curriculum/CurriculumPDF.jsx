@@ -1,6 +1,7 @@
 import React from 'react';
 import { PDFDownloadLink, Document, Page, Text, View, Image } from '@react-pdf/renderer';
-import { pdfStyles as styles } from './pdfStyles';
+import { pdfStyles as styles } from '../pdfStyles';
+import htmlStyle from './style.module.css';
 const MyDocument = ({ data, user }) => (
 
     <Document >
@@ -10,8 +11,7 @@ const MyDocument = ({ data, user }) => (
             <View style={styles.headerPersonal}>
 
                 <View style={styles.avatarContainer}>
-                    {/* <Image src={user.fotoPerfil} style={styles.avatar} /> */}
-                    <Image src="https://avatars.githubusercontent.com/u/160643778?s=400&u=b53b18d55f4afe5c375496d699865b0bb7582935&v=4.png" style={styles.avatar} />
+                    <Image src={user.fotoPerfil} style={styles.avatar} />
                 </View>
 
                 <View style={styles.personalData}>
@@ -89,8 +89,10 @@ const MyDocument = ({ data, user }) => (
 
 
 const PDFViewer = ({ data, user }) => (
-    <PDFDownloadLink document={<MyDocument data={data} user={user} />} fileName="cv.pdf">
-        {({ loading }) => (loading ? 'Generando PDF...' : 'Descargar CV')}
+    <PDFDownloadLink className={htmlStyle.button} document={<MyDocument data={data} user={user} />} fileName="cv.pdf">
+        {({ loading }) => (
+            loading ? 'Generando PDF...' : 'Descargar Currículum'
+        )}
     </PDFDownloadLink>
 );
 
