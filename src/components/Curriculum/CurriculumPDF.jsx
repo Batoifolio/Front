@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { PDFDownloadLink, Document, Page, Text, View, Image, BlobProvider } from '@react-pdf/renderer';
-import { pdfStyles as styles } from '../pdfStyles';
+import { pdfStyles as styles } from './pdfStyles';
 import htmlStyle from './style.module.css';
 import Swal from 'sweetalert2';
 

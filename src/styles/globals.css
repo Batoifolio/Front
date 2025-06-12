@@ -16,6 +16,7 @@
   --color-rojo: #dc3545;
   --color-bg-body: linear-gradient(180deg, #fff 45%, #cecece 85%, #666);
   --color-bg-main: linear-gradient(45deg, var(--color-rosa), var(--color-accent-select));
+  /* --color-bg-main: linear-gradient(45deg, #5d5d5d, #a3a3a3); */
   --color-text-default: var(--color-blanco);
   --color-text-main: var(--color-gris);
   --color-accent: var(--color-rosa);

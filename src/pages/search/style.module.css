@@ -1,98 +1,33 @@
 .container {
-    padding: 2rem;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
-    font-family: 'Segoe UI', sans-serif;
+    padding: 2rem;
+    /* background-color: #f9fafb; */
+    min-height: 100vh;
 }
 
 .title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #111827;
 }
 
-.input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: border-color 0.2s ease;
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
 }
 
-.input:focus {
-    outline: none;
-    border-color: #007bff;
+@media (max-width: 950px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
 }
 
-.section {
-    margin-top: 2rem;
-}
-
-.sectionTitle {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-.badgeContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-}
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.4rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    user-select: none;
-}
-
-.badgeDefault {
-    background-color: #007bff;
-    color: white;
-}
-
-.badgeDefault:hover {
-    background-color: #0056b3;
-}
-
-.badgeOutline {
-    border: 1px solid #007bff;
-    color: #007bff;
-    background-color: white;
-}
-
-.badgeOutline:hover {
-    background-color: #e7f0ff;
-}
-
-.icon {
-    margin-left: 0.5rem;
-    font-size: 1rem;
-}
-
-.clearButton {
-    background: none;
-    border: none;
-    color: #dc3545;
-    font-size: 0.875rem;
-    cursor: pointer;
-    margin-left: 1rem;
-    text-decoration: underline;
-}
-
-.clearButton:hover {
-    color: #b02a37;
-}
-
-.resultText {
-    color: #6c757d;
-    margin-top: 0.5rem;
+@media (max-width: 550px) {
+    .container {
+        padding: 0;
+    }
 }

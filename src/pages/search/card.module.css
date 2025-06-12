@@ -1,0 +1,164 @@
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    /* width: 300px; */
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-areas:
+        "image buttons"
+        "image name"
+        "image username"
+        "pueblo email"
+        "grado rama"
+        "descripcion descripcion";
+
+    cursor: pointer;
+    transition: all 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.buttons {
+    grid-area: buttons;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: 100%;
+}
+
+.see {
+    grid-area: see;
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px solid red;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.see i {
+    color: var(--color-rosa);
+    font-size: 2.5rem;
+}
+
+.image {
+    grid-area: image;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 0px #00000075;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.name {
+    grid-area: name;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.username {
+    grid-area: username;
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.email {
+    grid-area: email;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.pueblo {
+    grid-area: pueblo;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.estado {
+    grid-area: estado;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.grado {
+    grid-area: grado;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.rama {
+    grid-area: rama;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.descripcion {
+    grid-area: descripcion;
+    font-size: 0.95rem;
+    color: #374151;
+    margin: 0.5rem 0;
+    height: 105px;
+    padding: 10px;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.email,
+.pueblo,
+.estado,
+.grado,
+.rama {
+    font-size: 0.95rem;
+    color: #374151;
+    margin: 0.25rem 0;
+}
+
+@media (max-width: 750px) {
+    .card {
+        grid-template-areas:
+            "image buttons"
+            "image image"
+            "name username"
+            "pueblo email"
+            "grado rama"
+            "descripcion descripcion";
+    }
+}
+
+@media (max-width: 500px) {
+    .card {
+        grid-template-areas:
+            "buttons"
+            "image "
+            "name "
+            "username"
+            "email"
+            "pueblo "
+            "rama"
+            "grado"
+            "descripcion";
+    }
+}
