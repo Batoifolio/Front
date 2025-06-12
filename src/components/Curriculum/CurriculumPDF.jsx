@@ -1,9 +1,12 @@
-import React from 'react';
-import { PDFDownloadLink, Document, Page, Text, View, Image } from '@react-pdf/renderer';
+import React, { useState, useEffect } from 'react';
+import { pdf } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, Text, View, Image, BlobProvider } from '@react-pdf/renderer';
 import { pdfStyles as styles } from '../pdfStyles';
 import htmlStyle from './style.module.css';
-const MyDocument = ({ data, user }) => (
+import Swal from 'sweetalert2';
 
+
+const MyDocument = ({ data, user }) => (
     <Document >
         <Page size="A4" style={styles.page}>
             <View style={styles.iconosApp}>
@@ -91,14 +94,47 @@ const MyDocument = ({ data, user }) => (
     </Document >
 );
 
+const PDFViewer = ({ data, user }) => {
+    const [pdfUrl, setPdfUrl] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-const PDFViewer = ({ data, user }) => (
-    <PDFDownloadLink className={htmlStyle.button} document={<MyDocument data={data} user={user} />} fileName="cv.pdf">
-        {({ loading }) => (
-            loading ? 'Generando PDF...' : 'Descargar Currículum'
-        )}
-    </PDFDownloadLink>
-);
+    useEffect(() => {
+        const generatePDF = async () => {
+            const blob = await pdf(<MyDocument data={data} user={user} />).toBlob();
+            const url = URL.createObjectURL(blob);
+            setPdfUrl(url);
+            setLoading(false);
+        };
 
+        generatePDF();
+
+        // Limpiar el blob cuando el componente se desmonta
+        return () => {
+            if (pdfUrl) {
+                URL.revokeObjectURL(pdfUrl);
+            }
+        };
+    }, [data, user]);
+
+    const handleOpenPDF = () => {
+        Swal.fire({
+            title: 'Vista previa del CV',
+            html: `<iframe src="${pdfUrl}" width="100%" height="600px" style="border:none;"></iframe>`,
+            width: '80%',
+            confirmButtonText: 'Cerrar',
+            showCloseButton: true
+        });
+    };
+
+    if (loading) {
+        return <div>Generando PDF...</div>;
+    }
+
+    return (
+        <button className={htmlStyle.button} onClick={handleOpenPDF}>
+            Visualizar PDF
+        </button>
+    );
+};
 
 export default PDFViewer;
