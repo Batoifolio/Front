@@ -20,6 +20,33 @@
     gap: 2rem;
 }
 
+.paginate {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 20px 5% 20px 5%;
+}
+
+.paginate button {
+    width: 100%;
+    background-color: var(--color-blanco);
+    color: var(--color-gris);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 20px 0px var(--color-header-shadow);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.paginate button:hover {
+    background-color: var(--color-rosa);
+    color: var(--color-blanco);
+    box-shadow: outset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 950px) {
     .cards {
         grid-template-columns: 1fr;
