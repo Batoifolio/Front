@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation';
 import { AuthContext } from '@/context/AuthContext';
-import NavItem from '@/components/NavItem';
+import NavItem from '@/components/NavBar/NavItem';
 import styles from './style.module.css';
 import Link from "next/link";
 

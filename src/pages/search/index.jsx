@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import Paginate from '@/components/Paginate';
-import UserCard from '@/components/UserCard';
+import Paginate from '@/components/Paginate/Paginate';
+import UserCard from '@/components/User/Card/UserCard';
 import styles from './style.module.css';
 import Loader from '@/components/Loader';
 import Filter from '@/components/User/Filter/UserFilter';
@@ -122,7 +122,7 @@ function SearchPage() {
         <div className={styles.container}>
             <h1 className={styles.title}>Buscar Alumnos</h1>
             <Filter filter={filter} onSubmit={handleFilterSubmit} />
-            {paginate.totalPages > 0 && (
+            {paginate?.totalPages !== undefined && paginate.totalPages > 0 && (
                 <Paginate paginate={paginate} page={page} onPageChange={handlePageChange} />
             )}
 
@@ -133,7 +133,7 @@ function SearchPage() {
                     <div>No se han encontrado Alumnos.</div>
                 )}
             </div>
-            {paginate.totalPages > 0 && (
+            {paginate?.totalPages !== undefined && paginate.totalPages > 0 && (
                 <Paginate paginate={paginate} page={page} onPageChange={handlePageChange} />
             )}
 

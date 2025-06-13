@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import UserInfoSwalContent from '@/components/UserInfoSwalContent';
+import UserInfoSwalContent from '@/components/User/UserInfoSwalContent/UserInfoSwalContent';
 import ReactDOMServer from 'react-dom/server';
 
 import Swal from 'sweetalert2';

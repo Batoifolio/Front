@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import Navbar from './Navbar';
+import Navbar from './NavBar/Navbar';
 
 export default function Layout({ children }) {
     return (
