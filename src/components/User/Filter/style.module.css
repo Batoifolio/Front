@@ -1,0 +1,72 @@
+.formContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    grid-template-areas:
+        "nombre email pueblo"
+        "ramaId gradoId button"
+}
+
+.formContainer * {
+    color: var(--color-gris)
+}
+
+.nombre {
+    grid-area: nombre;
+}
+
+.email {
+    grid-area: email;
+}
+
+.pueblo {
+    grid-area: pueblo;
+}
+
+.ramaId {
+    grid-area: ramaId;
+}
+
+.gradoId {
+    grid-area: gradoId;
+}
+
+.button {
+    grid-area: button;
+    padding: 0.8rem;
+    background-color: var(--color-rosa);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: var(--color-rosa-fuerte);
+}
+
+.formInput {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.formInput:focus {
+    border-color: var(--color-rosa-suave);
+    box-shadow: 0 0 10px 0px var(--color-rosa-suave);
+    outline: none;
+}
