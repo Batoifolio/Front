@@ -109,7 +109,7 @@
 }
 
 .formInput:focus {
-    border-color: #0070f3;
-    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.2);
+    border-color: var(--color-rosa-suave);
+    box-shadow: 0 0 10px 0px var(--color-rosa-suave);
     outline: none;
 }
