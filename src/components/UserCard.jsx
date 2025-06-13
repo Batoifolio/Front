@@ -1,7 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-
+import UserInfoSwalContent from '@/components/UserInfoSwalContent';
+import ReactDOMServer from 'react-dom/server';
 
 import Swal from 'sweetalert2';
 import dynamic from 'next/dynamic';
@@ -25,24 +26,19 @@ function UserCard({ item }) {
             const curriculum = await fetchCurriculumData(item.id);
             let root = null;
 
+            const html = ReactDOMServer.renderToString(<UserInfoSwalContent item={item} />);
+
             await Swal.fire({
                 title: `${item.nombre} ${item.apellidos}`,
-                html: `<div id="pdf-container"></div>
-                <div style="text-align: left;">
-                        <p><strong>Nombre:</strong> ${item.nombre} ${item.apellidos}</p>
-                        <p><strong>Username:</strong> @${item.username}</p>
-                        <p><strong>Email:</strong> ${item.email}</p>
-                        <p><strong>Pueblo:</strong> ${item.pueblo}</p>
-                        <p><strong>Grado:</strong> ${item.grado?.nombre || ''}</p>
-                        <p><strong>Rama:</strong> ${item.rama?.nombre || ''}</p>
-                        ${item.descripcion ? `<p><strong>Descripción:</strong> ${item.descripcion}</p>` : ''}
-                </div>`,
+                html,
                 imageUrl: item.fotoPerfil,
+                imageWidth: 200,
+                imageHeight: 200,
                 imageAlt: `${item.nombre} ${item.apellidos}`,
                 confirmButtonText: 'Aceptar',
                 width: '800px',
                 customClass: {
-                    popup: 'swal2-custom-popup'
+                    popup: 'swal2-custom-popup swal2-custom-popup-user-info',
                 },
                 didOpen: () => {
                     const container = document.getElementById('pdf-container');

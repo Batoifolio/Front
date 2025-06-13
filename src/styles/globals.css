@@ -322,6 +322,10 @@ footer {
   color: #333;
 }
 
+.swal2-custom-popup-user-info img {
+  border-radius: 50%;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
