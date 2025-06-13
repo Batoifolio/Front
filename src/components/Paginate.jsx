@@ -3,6 +3,14 @@ import React from 'react';
 import styles from './Paginate.module.css'; // renombrado el css
 
 function Paginate({ paginate, page, onPageChange }) {
+    if (paginate === undefined) {
+        paginate = {
+            totalPages: 1,
+            totalItems: 0,
+            limit: 10,
+            currentPage: 1,
+        };
+    }
     const handlePageChange = (pageNumber) => {
         if (pageNumber < 1 || pageNumber > paginate.totalPages) return;
         onPageChange(pageNumber);
