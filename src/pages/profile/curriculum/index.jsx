@@ -84,11 +84,6 @@ function CurriculumViewPage() {
         };
 
         if (user?.id) fetchCurriculum();
-
-
-        const getPDF = async () => {
-
-        }
     }, [user]);
 
     return (

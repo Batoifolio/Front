@@ -159,6 +159,7 @@
     margin: 0.25rem 0;
 }
 
+
 @media (max-width: 750px) {
     .card {
         grid-template-areas:

@@ -2,6 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import AlertNoAutenticado from './AlertNoAutenticado';
+import Loader from '../Loader';
 
 export default function AuthGuard({ children }) {
     const { user, token, loading } = useContext(AuthContext);
@@ -10,7 +11,7 @@ export default function AuthGuard({ children }) {
         if (!user || !token) return;
     }, [user, token]);
 
-    if (loading) return <div>Cargando...</div>;
+    if (loading) return <Loader show={loading} />;
     if (!user || !token) return <AlertNoAutenticado />;
 
     // Clona el children y le pasa user como prop

@@ -4,6 +4,7 @@ import { PDFDownloadLink, Document, Page, Text, View, Image, BlobProvider } from
 import { pdfStyles as styles } from './pdfStyles';
 import htmlStyle from './style.module.css';
 import Swal from 'sweetalert2';
+import Loader from '../Loader';
 
 
 const MyDocument = ({ data, user }) => (
@@ -127,7 +128,7 @@ const PDFViewer = ({ data, user }) => {
     };
 
     if (loading) {
-        return <div>Generando PDF...</div>;
+        return <button className={htmlStyle.button} disabled>Generando PDF...</button >;
     }
 
     return (

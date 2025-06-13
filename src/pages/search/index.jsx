@@ -1,65 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Paginate from '@/components/Paginate';
+import UserCard from '@/components/UserCard';
 import styles from './style.module.css';
-import stylesCard from './card.module.css';
-import Swal from 'sweetalert2';
+import Loader from '@/components/Loader';
 
 const api = process.env.NEXT_PUBLIC_API_URL;
-
-function Paginate({ paginate, page, onPageChange }) {
-    const handlePageChange = (pageNumber) => {
-        if (pageNumber < 1 || pageNumber > paginate.totalPages) return;
-        onPageChange(pageNumber);
-    };
-
-    const pageNumbers = [];
-    for (let i = 0; i < 5; i++) {
-        const pageNumber = page + i;
-        if (pageNumber <= paginate.totalPages) {
-            pageNumbers.push(pageNumber);
-        }
-    }
-
-    return (
-        <div className={styles.paginate}>
-            <button
-                className={styles.prevButton}
-                onClick={() => handlePageChange(page - 1)}
-                disabled={page === 1}
-            >
-                Anterior
-            </button>
-
-            <span className={styles.pageInfo}>
-                Página {page} de {paginate.totalPages}
-            </span>
-
-            {/* Si quieres los numeritos, descomenta esto */}
-            {/* 
-            <div>
-                {pageNumbers.map((num) => (
-                    <button
-                        key={num}
-                        className={`${styles.pageButton} ${num === page ? styles.activePage : ''}`}
-                        onClick={() => handlePageChange(num)}
-                    >
-                        {num}
-                    </button>
-                ))}
-            </div> 
-            */}
-
-            <button
-                className={styles.nextButton}
-                onClick={() => handlePageChange(page + 1)}
-                disabled={page === paginate.totalPages}
-            >
-                Siguiente
-            </button>
-        </div>
-    );
-}
 
 function SearchPage() {
     const searchParams = useSearchParams();
@@ -67,6 +14,9 @@ function SearchPage() {
 
     const pageParam = searchParams.get('page');
     const page = pageParam ? parseInt(pageParam, 10) : 1;
+    if (isNaN(page) || page < 1) {
+        router.push('/search?page=1');
+    }
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -87,6 +37,10 @@ function SearchPage() {
                 if (res) {
                     setData(res.data);
                     setPaginate(res.pagination);
+                    if (res.pagination?.totalPages != undefined && page > res.pagination.totalPages) {
+                        router.push(`/search?page=${res.pagination.totalPages}`);
+                    }
+
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -103,25 +57,8 @@ function SearchPage() {
         router.push(`/search?${params.toString()}`);
     };
 
-    const openProfile = async (id) => {
-        const card = document.getElementById(`${id}`);
-        if (card) {
-            card.classList.add(stylesCard.active);
-        }
-        await Swal.fire({
-            title: 'Perfil del Alumno',
-            text: `ID del Alumno: ${id}`,
-            icon: 'info',
-            confirmButtonText: 'Aceptar',
-        }).finally(() => {
-            setTimeout(() => {
-                card.classList.remove(stylesCard.active);
-            }, 3000);
-        });
-    };
-
     if (loading) {
-        return <div className={styles.loading}>Cargando...</div>;
+        return (<Loader show={loading} />);
     }
 
     if (!data || data.length === 0) {
@@ -134,21 +71,7 @@ function SearchPage() {
             <Paginate paginate={paginate} page={page} onPageChange={handlePageChange} />
             <div className={styles.cards}>
                 {data.map((item) => (
-                    <div key={item.id} id={item.id} className={`${stylesCard.card}`}>
-                        <div className={stylesCard.buttons} onClick={() => openProfile(item.id)}>
-                            <button type="button" className={stylesCard.see}>
-                                <i className="bi bi-eyeglasses"></i>
-                            </button>
-                        </div>
-                        <img src={item.fotoPerfil} alt={`${item.nombre} ${item.apellidos}`} className={stylesCard.image} />
-                        <h2 className={stylesCard.name}>{item.nombre} {item.apellidos}</h2>
-                        <p className={stylesCard.username}>@{item.username}</p>
-                        <p className={stylesCard.email}>{item.email}</p>
-                        <p className={stylesCard.pueblo}>{item.pueblo}</p>
-                        <p className={stylesCard.grado}>Grado: {item.grado.nombre}</p>
-                        <p className={stylesCard.rama}>Rama: {item.rama.nombre}</p>
-                        {item.descripcion && <p className={stylesCard.descripcion}>{item.descripcion}</p>}
-                    </div>
+                    <UserCard key={item.id} item={item} />
                 ))}
             </div>
             <Paginate paginate={paginate} page={page} onPageChange={handlePageChange} />
