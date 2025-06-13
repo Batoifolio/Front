@@ -1,14 +1,16 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import styles from './style.module.css';
 import stylesCard from './card.module.css';
 import Swal from 'sweetalert2';
+
 const api = process.env.NEXT_PUBLIC_API_URL;
 
-function Paginate({ paginate, setPage, page }) {
+function Paginate({ paginate, page, onPageChange }) {
     const handlePageChange = (pageNumber) => {
         if (pageNumber < 1 || pageNumber > paginate.totalPages) return;
-        setPage(pageNumber);
+        onPageChange(pageNumber);
     };
 
     const pageNumbers = [];
@@ -32,7 +34,10 @@ function Paginate({ paginate, setPage, page }) {
             <span className={styles.pageInfo}>
                 Página {page} de {paginate.totalPages}
             </span>
-            {/* <div>
+
+            {/* Si quieres los numeritos, descomenta esto */}
+            {/* 
+            <div>
                 {pageNumbers.map((num) => (
                     <button
                         key={num}
@@ -42,7 +47,9 @@ function Paginate({ paginate, setPage, page }) {
                         {num}
                     </button>
                 ))}
-            </div> */}
+            </div> 
+            */}
+
             <button
                 className={styles.nextButton}
                 onClick={() => handlePageChange(page + 1)}
@@ -54,11 +61,15 @@ function Paginate({ paginate, setPage, page }) {
     );
 }
 
-
 function SearchPage() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+
+    const pageParam = searchParams.get('page');
+    const page = pageParam ? parseInt(pageParam, 10) : 1;
+
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [page, setPage] = useState(1);
     const [paginate, setPaginate] = useState({
         totalPages: 1,
         totalItems: 0,
@@ -85,8 +96,14 @@ function SearchPage() {
         fetchData();
     }, [page]);
 
+    const handlePageChange = (newPage) => {
+        if (newPage < 1 || newPage > paginate.totalPages) return;
+        const params = new URLSearchParams(searchParams);
+        params.set('page', newPage);
+        router.push(`/search?${params.toString()}`);
+    };
+
     const openProfile = async (id) => {
-        console.log(`Abrir perfil del alumno con ID: ${id}`);
         const card = document.getElementById(`${id}`);
         if (card) {
             card.classList.add(stylesCard.active);
@@ -95,7 +112,7 @@ function SearchPage() {
             title: 'Perfil del Alumno',
             text: `ID del Alumno: ${id}`,
             icon: 'info',
-            confirmButtonText: 'Aceptar'
+            confirmButtonText: 'Aceptar',
         }).finally(() => {
             setTimeout(() => {
                 card.classList.remove(stylesCard.active);
@@ -114,12 +131,12 @@ function SearchPage() {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Buscar Alumnos</h1>
-            <Paginate paginate={paginate} setPage={setPage} page={page} />
+            <Paginate paginate={paginate} page={page} onPageChange={handlePageChange} />
             <div className={styles.cards}>
                 {data.map((item) => (
                     <div key={item.id} id={item.id} className={`${stylesCard.card}`}>
                         <div className={stylesCard.buttons} onClick={() => openProfile(item.id)}>
-                            <button type='button' className={stylesCard.see}>
+                            <button type="button" className={stylesCard.see}>
                                 <i className="bi bi-eyeglasses"></i>
                             </button>
                         </div>
@@ -134,7 +151,7 @@ function SearchPage() {
                     </div>
                 ))}
             </div>
-            <Paginate paginate={paginate} setPage={setPage} page={page} />
+            <Paginate paginate={paginate} page={page} onPageChange={handlePageChange} />
         </div>
     );
 }
