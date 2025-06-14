@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import styles from './edit.module.css';
-import UploadImage from "@/components/UploadImage";
+import UploadImage from "@/components/UploadImage/UploadImage";
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
