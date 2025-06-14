@@ -1,10 +1,11 @@
 .container {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
     max-width: 300px;
     margin: 0 auto;
+    justify-content: center;
 }
 
 .avatarImage {
@@ -24,7 +25,7 @@
 }
 
 .fileButton {
-    background-color: var(--color-rosa-suave);
+    background-color: var(--color-rosa);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -35,7 +36,7 @@
 }
 
 .fileButton:hover {
-    background-color: var(--color-rosa);
+    background-color: var(--color-rosa-fuerte);
     transform: translateY(-1px);
 }
 

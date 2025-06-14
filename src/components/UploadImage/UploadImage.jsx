@@ -64,6 +64,7 @@ export default function ImageUploader({ onUpload, defaultImage = '/default-avata
                 </label>
 
                 <button
+                    type='button'
                     onClick={handleUpload}
                     disabled={uploading || !selectedFile}
                     className={styles.uploadButton}
