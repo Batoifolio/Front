@@ -11,8 +11,8 @@ export const pdfStyles = StyleSheet.create({
         gap: 5
     },
     icon: {
-        width: 50,
-        height: 50,
+        width: 30,
+        height: 30,
     },
     page: {
         padding: 40,
