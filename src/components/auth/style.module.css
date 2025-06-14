@@ -9,6 +9,9 @@
     color: var(--color-text-main);
 }
 
+.container p.bienvenido {
+    color: var(--color-blanco);
+}
 
 .side {
     color: var(--color-text-default);

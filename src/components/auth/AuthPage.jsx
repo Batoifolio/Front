@@ -193,7 +193,7 @@ export default function AuthPage({ mode = 'login' }) {
                 <div className={styles.side}>
                     <Image src="/batoifolio-icon.png" alt="Logo Empresa" width={180} height={180} className={styles.image} />
                     <Image src="/batoifolio.png" alt="Texto Empresa" width={180} height={180} className={styles.image} />
-                    <p>Bienvenido a la plataforma profesional de Batoifolio.</p>
+                    <p className={styles.bienvenido}>Bienvenido a la plataforma profesional de Batoifolio.</p>
                     {user && <h1>Hola, {user.nombre}!</h1>}
                 </div>
 
