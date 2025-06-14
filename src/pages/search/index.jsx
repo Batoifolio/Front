@@ -47,6 +47,7 @@ function SearchPage() {
 
     // Cada vez que cambian filtros o página -> fetch
     useEffect(() => {
+        document.title = 'Batoifolio - Busacar Alumnos';
         const fetchData = async () => {
             setLoading(true);
             try {

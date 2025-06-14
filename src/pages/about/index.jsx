@@ -8,29 +8,39 @@ const AboutPage = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}><span>Sobre Batoi</span>Folio</h1>
+            <section className={styles.hero}>
+                <h2 className={styles.title}>
+                    Sobre Batoi<span className={styles.folio}>Folio</span>
+                </h2>
 
-            <p className={styles.description}>
-                <strong>Batoifolio</strong> nace de la combinación de <strong>Batoi</strong> y <strong>Portfolio</strong>,
-                como una plataforma pensada para dar visibilidad a los talentos de nuestro centro educativo.
-                Aquí los alumnos pueden mostrar sus <strong>currículums</strong> y <strong>proyectos realizados</strong>,
-                facilitando a las empresas encontrar perfiles adecuados para prácticas, FCT o contratos.
-            </p>
+                <p className={styles.subtitle}>
+                    <strong>Batoifolio</strong> nace de la combinación de <strong>Batoi</strong> y <strong>Portfolio</strong>, como una
+                    plataforma pensada para dar visibilidad a los talentos de nuestro centro educativo. Aquí los alumnos pueden mostrar sus
+                    <strong> currículums</strong> y <strong>proyectos realizados</strong>, facilitando a las empresas encontrar perfiles
+                    adecuados para prácticas, FCT o contratos.
+                </p>
+            </section>
 
             <div className={styles.cardsContainer}>
                 <div className={styles.card}>
-                    <h2 className={styles.cardTitle}>Visibilidad</h2>
-                    <p className={styles.cardText}>Ayudamos a los alumnos a mostrar sus habilidades, trabajos y experiencia.</p>
+                    <h3 className={styles.cardTitle}>Visibilidad</h3>
+                    <p className={styles.cardText}>
+                        Ayudamos a los alumnos a mostrar sus habilidades, trabajos y experiencia.
+                    </p>
                 </div>
 
                 <div className={styles.card}>
-                    <h2 className={styles.cardTitle}>Facilidad</h2>
-                    <p className={styles.cardText}>Los tutores pueden gestionar y filtrar los perfiles para conectar con las empresas más adecuadas.</p>
+                    <h3 className={styles.cardTitle}>Facilidad</h3>
+                    <p className={styles.cardText}>
+                        Las tutoras pueden gestionar y filtrar los perfiles para contactar con las empresas más adecuadas.
+                    </p>
                 </div>
 
                 <div className={styles.card}>
-                    <h2 className={styles.cardTitle}>Oportunidad</h2>
-                    <p className={styles.cardText}>Las empresas pueden descubrir fácilmente los perfiles que mejor se adaptan a sus necesidades.</p>
+                    <h3 className={styles.cardTitle}>Oportunidad</h3>
+                    <p className={styles.cardText}>
+                        Las empresas pueden descubrir fácilmente los perfiles que mejor se adaptan a sus necesidades.
+                    </p>
                 </div>
             </div>
 
@@ -61,11 +71,6 @@ const AboutPage = () => {
                     ))}
                 </div>
             </div>
-
-
-
-
-
         </div>
     );
 };

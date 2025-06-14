@@ -1,0 +1,97 @@
+.container {
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.hero {
+    text-align: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--color-corporate);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    max-width: 60ch;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--color-text-default);
+}
+
+.highlight {
+    color: var(--color-corporate);
+    font-weight: bold;
+}
+
+.cardsContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .cardsContainer {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card {
+    background: var(--color-header-bg);
+    backdrop-filter: blur(8px);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--color-accent-select);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: var(--color-accent);
+}
+
+.cardText {
+    margin-top: 0.5rem;
+    color: var(--color-text-default);
+}
+
+.cta {
+    text-align: center;
+}
+
+.ctaButton {
+    background-color: var(--color-corporate);
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.ctaButton:hover {
+    transform: scale(1.05);
+    background-color: var(--color-corporate-hover);
+}
+
+.folio {
+    color: var(--color-rosa);
+}

@@ -86,8 +86,8 @@ function UserCard({ item }) {
             <p className={stylesCard.username}>@{item.username}</p>
             <p className={stylesCard.email}>{item.email}</p>
             <p className={stylesCard.pueblo}>{item.pueblo}</p>
-            <p className={stylesCard.grado}>Grado: {item.grado.nombre}</p>
-            <p className={stylesCard.rama}>Rama: {item.rama.nombre}</p>
+            <p className={stylesCard.grado}>Grado: {item.grado?.nombre}</p>
+            <p className={stylesCard.rama}>Rama: {item.rama?.nombre}</p>
             {item.descripcion && <p className={stylesCard.descripcion}>{item.descripcion}</p>}
         </div>
     );

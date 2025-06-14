@@ -11,8 +11,12 @@
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 1.5rem;
-    color: var(--color-accent);
+    color: var(--color-text-default);
     text-shadow: 0 0 10px rgb(255 255 255 / 30%);
+}
+
+.folio {
+    color: var(--color-rosa);
 }
 
 .description {
