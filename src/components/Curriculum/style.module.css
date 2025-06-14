@@ -5,11 +5,11 @@
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease;
-    color: var(--color-blanco);
     text-align: center;
 }
 
-.button {
+button.button {
+    color: var(--color-blanco);
     background: var(--color-accent);
 }
 

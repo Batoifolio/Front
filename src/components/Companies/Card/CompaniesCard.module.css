@@ -1,0 +1,174 @@
+.card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    /* width: 300px; */
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    grid-template-areas:
+        "image buttons"
+        "image cif"
+        "name name"
+        "telefono email"
+        "direccion sector";
+    gap: 10px;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card.active {
+    transform: scale(1.05);
+}
+
+.card.active img {
+    box-shadow: 0 0 20px 0px var(--color-rosa-suave);
+}
+
+.buttons {
+    grid-area: buttons;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: 100%;
+}
+
+.see {
+    grid-area: see;
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 1px solid red;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.see i {
+    color: var(--color-rosa);
+    font-size: 2.5rem;
+    transition: color 0.2s ease;
+}
+
+.card.active .see,
+.see:hover {
+    background-color: var(--color-rosa);
+}
+
+.card.active .see i,
+.see:hover i {
+    color: #ffffff;
+}
+
+.image {
+    grid-area: image;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 0px #00000075;
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    margin-right: 10px;
+    transition: all 0.2s ease;
+}
+
+
+.name {
+    grid-area: name;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+
+
+
+
+.cif {
+    grid-area: cif;
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.email {
+    grid-area: email;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.telefono {
+    grid-area: telefono;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.direccion {
+    grid-area: direccion;
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.sector {
+    grid-area: sector;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.email,
+.telefono,
+.direccion,
+.sector {
+    font-size: 0.95rem;
+    color: #374151;
+    margin: 0.25rem 0;
+}
+
+.email,
+.telefono,
+.direccion,
+.sector {
+    text-align: left;
+    width: 100%;
+}
+
+
+@media (max-width: 750px) {
+    .card {
+        grid-template-areas:
+            "image buttons"
+            "image image"
+            "name cif"
+            "telefono email"
+            "direccion sector";
+    }
+}
+
+@media (max-width: 500px) {
+    .card {
+        grid-template-areas:
+            "buttons"
+            "image "
+            "name "
+            "cif"
+            "email"
+            "telefono "
+            "sector"
+            "direccion";
+    }
+}

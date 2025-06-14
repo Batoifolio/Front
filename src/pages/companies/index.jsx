@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Paginate from '@/components/Paginate/Paginate';
-import UserCard from '@/components/User/Card/UserCard';
+import CompanyCard from '@/components/Companies/Card/CompaniesCard';
 import styles from './style.module.css';
 import Loader from '@/components/Loader';
 
@@ -35,7 +35,7 @@ function CompaniesPage() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`${api}users/filter/?page=${page}&limit=10}`);
+                const response = await fetch(`${api}empresas/?page=${page}&limit=10`);
                 const res = await response.json();
 
                 if (res) {
@@ -47,10 +47,10 @@ function CompaniesPage() {
                     if (totalPages === 0) {
                         // No hay resultados, nos quedamos en página 1
                         if (page !== 1) {
-                            router.push(`/companies?page=1}`);
+                            router.push(`/companies?page=1`);
                         }
                     } else if (page > totalPages) {
-                        router.push(`/companies?page=${totalPages}}`);
+                        router.push(`/companies?page=${totalPages}`);
                     }
                 }
             } catch (error) {
@@ -83,7 +83,7 @@ function CompaniesPage() {
 
             <div className={styles.cards}>
                 {data !== undefined && data !== null && data.length > 0 ? (
-                    data.map((item) => <UserCard key={item.id} item={item} />)
+                    data.map((item) => <CompanyCard key={item.id} item={item} />)
                 ) : (
                     <div>No se han encontrado Empresas.</div>
                 )}
