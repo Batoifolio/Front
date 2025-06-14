@@ -29,16 +29,13 @@
 
 .cardsContainer {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-bottom: 3rem;
+    margin-top: 2rem;
 }
 
-@media (min-width: 768px) {
-    .cardsContainer {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
+
 
 .card {
     background: var(--color-header-bg);
@@ -104,6 +101,7 @@
 
 
 .marqueeContainer {
+    grid-column: 1/4;
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -158,5 +156,22 @@
 
     100% {
         transform: translateX(-50%);
+    }
+}
+
+
+@media (max-width: 1176px) {
+    .cardsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .marqueeContainer {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 648px) {
+    .item {
+        width: 150px;
     }
 }

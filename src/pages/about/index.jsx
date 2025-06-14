@@ -42,35 +42,35 @@ const AboutPage = () => {
                         Las empresas pueden descubrir fácilmente los perfiles que mejor se adaptan a sus necesidades.
                     </p>
                 </div>
-            </div>
-
-            <div className={styles.marqueeContainer}>
-                <div className={styles.marqueeTrack}>
-                    {/* Contenido original */}
-                    {[...Array(4)].map((_, i) => (
-                        <>
-                            <a href="https://www.linkedin.com/">
-                                <div key={`item0-${i}`} className={styles.item}>
-                                    <img src="/LinkedIn.png" alt="LinkedIn" />
-                                    <span>LinkedIn</span>
-                                </div>
-                            </a>
-                            <a href="https://devfolio.co/">
-                                <div key={`item2-${i}`} className={styles.item}>
-                                    <img src="/DevFolio.png" alt="DevFolio" />
-                                    <span>Devfolio</span>
-                                </div>
-                            </a>
-                            <a href="https://www.infojobs.net/">
-                                <div key={`item3-${i}`} className={styles.item}>
-                                    <img src="/InfoJobs.png" alt="InfoJobs" />
-                                    <span>InfoJobs</span>
-                                </div>
-                            </a>
-                        </>
-                    ))}
+                <div className={styles.marqueeContainer}>
+                    <div className={styles.marqueeTrack}>
+                        {/* Contenido original */}
+                        {[...Array(4)].map((_, i) => (
+                            <>
+                                <a href="https://www.linkedin.com/">
+                                    <div key={`item0-${i}`} className={styles.item}>
+                                        <img src="/LinkedIn.png" alt="LinkedIn" />
+                                        <span>LinkedIn</span>
+                                    </div>
+                                </a>
+                                <a href="https://devfolio.co/">
+                                    <div key={`item2-${i}`} className={styles.item}>
+                                        <img src="/DevFolio.png" alt="DevFolio" />
+                                        <span>Devfolio</span>
+                                    </div>
+                                </a>
+                                <a href="https://www.infojobs.net/">
+                                    <div key={`item3-${i}`} className={styles.item}>
+                                        <img src="/InfoJobs.png" alt="InfoJobs" />
+                                        <span>InfoJobs</span>
+                                    </div>
+                                </a>
+                            </>
+                        ))}
+                    </div>
                 </div>
             </div>
+
         </div>
     );
 };

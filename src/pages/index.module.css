@@ -32,19 +32,21 @@
 
 .cardsContainer {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .cardsContainer {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
+
 .card {
+    width: 100%;
     background: var(--color-header-bg);
     backdrop-filter: blur(8px);
     padding: 2rem;
