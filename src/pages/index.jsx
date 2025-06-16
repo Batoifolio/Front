@@ -12,7 +12,7 @@ export default function Home() {
         <h2 className={styles.title}>Bienvenido a Batoi<span className={styles.folio}>Folio</span></h2>
 
         <p className={styles.subtitle}>
-          Una plataforma para <strong>destacar los talentos</strong> de los alumnos del <strong>IES Batoi</strong>. Explora perfiles,
+          Una plataforma para <strong>destacar los talentos</strong> de los alumnos del <strong>CIP FP Batoi</strong>. Explora perfiles,
           proyectos y encuentra oportunidades de <span className={styles.highlight}>FCT o DUAL</span>.
         </p>
       </section>
