@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import styles from './taginput.module.css'; // crea este archivo para estilos
 
-export default function TagInput({ tags, setTags, placeholder = 'Agrega una habilidad...' }) {
+export default function TagInput({ tags = [], setTags, placeholder = 'Agrega una habilidad...' }) {
     const [input, setInput] = useState('');
     const inputRef = useRef(null);
 
